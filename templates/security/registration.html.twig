@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SecurityController!
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="px-5 mt-5">
+			<h1>Inscription</h1>
+		</div>
+		<div class="row my-5 d-flex flex-column align-content-center justify-content-center">
+			{% for message in app.flashes('success') %}
+				<div class="text-center alert-success alert col-8 col-md-6 col-xl-4 mx-auto my-5">{{message|raw}}</div>
+
+			{% endfor %}
+
+			{% for message in app.flashes('error') %}
+				<div class="text-center alert-danger alert col-8 col-md-6 col-xl-4 mx-auto my-5">{{message|raw}}</div>
+			{% endfor %}
+			<div class="col-8 col-md-6 col-xl-4 justify-content-center">
+
+				{{form_start(registration_form)}}
+				<div class="form-group">
+					{{ 
+                        form_row(registration_form.username, {'label' : 'Nom', 'attr': {
+                    'placeholder': 'ex : Romain' }})
+															                    }}
+					{# <i class="fa-solid"></i>
+																				<span class="alert-message">L'adresse email n'est pas valide.</span> #}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(registration_form.email, {'label' : 'Email', 'attr': {
+                    'placeholder': 'ex : romain.romain@me.com' }})
+															                    }}
+					{# <i class="fa-solid"></i>
+																				<span class="alert-message">L'adresse email n'est pas valide.</span> #}
+				</div>
+				<div class="form-group">
+					{{form_row(registration_form.password, {'label' : 'Mot de passe', 'attr': {
+                    'placeholder': 'mot de passe'
+                }})}}
+					{# <i class="fa-solid"></i>
+																				<span class="alert-message">Votre mot de passe doit faire au moins 8 caractères, contenir un caractère spécial et un chiffre.</span> #}
+				</div>
+				<div class="form-group">
+					{{form_row(registration_form.confirm_password, {'label' : 'Confirmez mot de passe', 'attr': {
+                    'placeholder': 'mot de passe'
+                }})}}
+					{# <i class="fa-solid"></i>
+																				<span class="alert-message">Votre mot de passe doit faire au moins 8 caractères, contenir un caractère spécial et un chiffre.</span> #}
+				</div>
+				<div class="form-group mb-5">
+	
+                {{ form_widget(registration_form.AgreeTerms ,  {'attr': {
+       
+                }})}}
+				</div>
+				<button type="submit" class="btn btn-success">Inscription</button>
+				{{form_end(registration_form)}}
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

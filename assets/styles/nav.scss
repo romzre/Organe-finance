@@ -1,0 +1,30 @@
+nav
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+}
+.menu
+{
+    margin: 0;
+    padding: 0;
+}
+.menu
+{
+    
+    width: 500px;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    gap: 50px;
+
+    & li 
+    {
+        height: 100%;
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+}
