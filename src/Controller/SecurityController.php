@@ -59,14 +59,15 @@ class SecurityController extends AbstractController
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // dd($error);
+
 
         if ($error instanceof BadCredentialsException) {
-            $error = "Mot de passe et/ou adresse email incorrect";
+            $error= [];
+            $error["message"] = "Mot de passe et/ou adresse email incorrect";
         }
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        
+        // var_dump($error);exit;
         return $this->render('security/login.html.twig', [
             "error" => $error,
             "lastUsername" => $lastUsername

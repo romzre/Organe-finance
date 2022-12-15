@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Dashboard
+{% endblock %}
+
+{% block body %}
+	<main class="container ">
+		<div class="row my-5 ">
+			<div class="boxH">
+				<h1>Bonjour {{app.user.username}} </h1>
+			</div>
+		</div>
+
+		<div class="row my-5 ">
+			<div class="d-flex justify-content-center">
+				<div class="bloc1 bg-secondary my-auto ">
+					<div>
+						<h2>Organe Finance</h2>
+						<p>Lorem ipsum dolor sit amet consecter asidfuej ffafjajioe</p>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quisquam saepe eos voluptas et veniam nisi distinctio beatae tem?</p>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate deleniti enim officia voluptatem quae, animi, vitae quaerat, nostrum a optio ratione? Ulla</p>
+					</div>
+				</div>
+				<div class="bloc2">
+					<div>
+						<div>
+							<img src="https://via.placeholder.com/500" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
