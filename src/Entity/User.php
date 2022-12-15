@@ -28,7 +28,10 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
+     * @Assert\Email(
+     *     message = "Cette email n'est pas valide"
+     * )
      */
     private $email;
 
@@ -39,6 +42,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire minimum 8 caractères")
      * @Assert\EqualTo(
      *     propertyPath="confirm_password", message="Tu t'es gourré sur le mot de passe"
@@ -48,11 +52,15 @@ class User implements UserInterface
 
     /**
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire minimum 8 caractères")
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
      */
     public $confirm_password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="4", minMessage="Votre mot de passe doit faire minimum {{ limit }} caractères")
+     * @Assert\Length(max="12", maxMessage="Votre mot de passe doit faire maximum {{ limit }} caractères")
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
      */
     private $username;
 
