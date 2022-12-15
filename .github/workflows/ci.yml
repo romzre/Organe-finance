@@ -24,7 +24,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('composer.lock') }}
           
       - name: "Composer install"
-        run: composer install --no-interaction --no-progress
+        run: |
+            composer config --no-plugins allow-plugins.phpstan/extension-installer true
+            composer install --no-interaction --no-progress
           
       # Install Symfony CLI
       - name: Symfony CLI
