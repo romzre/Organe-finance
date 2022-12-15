@@ -28,7 +28,7 @@ security:
                 # "app_login" is the name of the route created previously
                 login_path: app_login
                 check_path: app_login
-            # user_checker: App\Security\UserChecker
+            user_checker: App\Security\UserChecker
             
             logout:
                 path: app_logout

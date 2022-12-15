@@ -69,6 +69,16 @@ class User implements UserInterface
      */
     private $AgreeTerms;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerify;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,5 +163,29 @@ class User implements UserInterface
 
     public function getSalt(){}
     public function eraseCredentials(){}
+
+    public function isIsVerify(): ?bool
+    {
+        return $this->isVerify;
+    }
+
+    public function setIsVerify(bool $isVerify): self
+    {
+        $this->isVerify = $isVerify;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
 
 }

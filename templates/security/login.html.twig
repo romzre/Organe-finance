@@ -10,16 +10,20 @@
 			<h1>Connexion</h1>
 		</div>
 		<div class="row my-5 d-flex flex-column align-content-center justify-content-center">
-			{% if error is defined %}
-				<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
 
-			<div class="col-8 col-md-6 col-xl-4 justify-content-center border border-primary rounded-4 p-5">
+				<div class="col-8 col-md-6 col-xl-4 justify-content-center border border-primary rounded-4 p-5"> {% if error is not empty %}
+					<div class="alert alert-danger">{{error.message}}</div>
 
+					<p>Envoyer le lien à nouveau :
+						<a href="">
+							<button class="btn btn-info">Cliquez-ici</button>
+						</a>
+					</p>
+				{% endif %}
 				<form action="{{ path('app_login') }}" method="post">
 					<div class="form-group">
 						<label for="username">Email:</label>
-						<input type="text" class="form-control" id="username" name="_username" value=""/>
+						<input type="text" class="form-control" id="username" name="_username" value="{{lastUsername}}"/>
 					</div>
 					<div class="form-group">
 						<label for="password">Password:</label>
@@ -27,7 +31,7 @@
 					</div>
 
 					{# If you want to control the URL the user is redirected to on success
-																					        <input type="hidden" name="_target_path" value="/account"/> #}
+																																				        <input type="hidden" name="_target_path" value="/account"/> #}
 					<div class="d-flex justify-content-center">
 						<button class="btn btn-primary my-3" type="submit">Connexion</button>
 					</div>
