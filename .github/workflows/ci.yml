@@ -53,7 +53,9 @@ jobs:
            php ./vendor/bin/simple-phpunit install
            
       - name: Lint YAML files
-        run: ./bin/console lint:yaml config --parse-tags
+        run: |
+           chmod +x bin/console
+           ./bin/console lint:yaml config --parse-tags
 
       - name: Lint Twig templates
         run: ./bin/console lint:twig templates --env=prod
