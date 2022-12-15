@@ -28,7 +28,10 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email()
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
+     * @Assert\Email(
+     *     message = "Cette email n'est pas valide"
+     * )
      */
     private $email;
 
@@ -39,6 +42,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire minimum 8 caractères")
      * @Assert\EqualTo(
      *     propertyPath="confirm_password", message="Tu t'es gourré sur le mot de passe"
@@ -48,11 +52,15 @@ class User implements UserInterface
 
     /**
      * @Assert\Length(min="8", minMessage="Votre mot de passe doit faire minimum 8 caractères")
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
      */
     public $confirm_password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min="4", minMessage="Votre mot de passe doit faire minimum {{ limit }} caractères")
+     * @Assert\Length(max="12", maxMessage="Votre mot de passe doit faire maximum {{ limit }} caractères")
+     * @Assert\NotBlank(message= "Ce champ ne peut pas être vide")
      */
     private $username;
 
@@ -60,6 +68,16 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $AgreeTerms;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerify;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
 
     public function getId(): ?int
     {
@@ -146,4 +164,48 @@ class User implements UserInterface
     public function getSalt(){}
     public function eraseCredentials(){}
 
+    public function isIsVerify(): ?bool
+    {
+        return $this->isVerify;
+    }
+
+    public function setIsVerify(bool $isVerify): self
+    {
+        $this->isVerify = $isVerify;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of confirm_password
+     */ 
+    public function getConfirm_password()
+    {
+        return $this->confirm_password;
+    }
+
+    /**
+     * Set the value of confirm_password
+     *
+     * @return  self
+     */ 
+    public function setConfirm_password($confirm_password)
+    {
+        $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
 }

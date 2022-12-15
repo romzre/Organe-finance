@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="row d-flex justify-content-center">
+			<h1 class="text-center p-3 my-5">Page introuvable</h1>
+	
+			<p class="text-center p-3 ">
+				La page que vous essayer de contacter est introuvable. Veuillez retourner à la page d'accueil.
+			</p>
+            <p class="text-center p-3"><a href="{{ path('app_home') }}"><button class="btn btn-primary">Accueil</button></a></p>
+		</div>
+	</div>
+{% endblock %}
