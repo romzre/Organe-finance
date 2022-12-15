@@ -46,7 +46,6 @@ jobs:
       - name: PHP Stan
         run: |
           composer require phpstan/phpstan
-           composer config --no-plugins allow-plugins.phpstan/extension-installer true
            composer require phpstan/extension-installer
            composer require phpstan/phpstan-symfony
            chmod +x bin/phpunit
