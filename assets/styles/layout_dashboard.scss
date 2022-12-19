@@ -4,7 +4,7 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 220px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 60px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-auto-columns: 1fr;
     gap: 0px 0px;
@@ -31,16 +31,16 @@
   
 .header
 {
-    border: 1px solid #000;
+
 }
 .Nav
 {
-    border: 1px solid #000;
+
 }
 
 .Main
 {
-    border: 1px solid #000;
+   
 }
 
 

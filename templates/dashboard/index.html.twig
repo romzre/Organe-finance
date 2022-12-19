@@ -6,13 +6,15 @@
 {% block body %}
 	<div class="container">
 		<div class="row">
-			<div class="d-flex justify-content-center">
-				<div class="p-5 bg-primary">primary</div>
-				<div class="p-5 bg-secondary">secondary</div>
-				<div class="p-5 bg-warning">warning</div>
-				<div class="p-5 bg-info">info</div>
-				<div class="p-5 bg-success">success</div>
+			<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord
+				{{app.user.username|upper}}</h1>
+		</div>
+		<div class="row">
+			<div class="d-flex justify-content-end">
+				<a href="">
+					<button class="btn btn-primary">Créer un compte</button>
+				</a>
 			</div>
 		</div>
 	</div>
-{% endblock %}
+</div>{% endblock %}

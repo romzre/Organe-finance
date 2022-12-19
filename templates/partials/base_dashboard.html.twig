@@ -18,7 +18,9 @@
 		{% endblock %}
 	</head>
 	<body>
-		<div class="containerDashboard">
+		<div
+			class="containerDashboard">
+			{# header #}
 			<div class="header">
 				<nav class="navbar navbar-expand-lg navbar-light bg-light">
 					<div class="container-fluid d-flex justify-content-end px-5">
@@ -41,11 +43,40 @@
 					</div>
 				</nav>
 			</div>
+			{# Side navbar #}
 			<div class="Nav bg-primary ">
 				<div class="row">
-					<div class="p-5 d-flex justify-content-center">
+					<div class="p-4 d-flex justify-content-center">
 						<div class="p-5 bg-success rounded">Logo</div>
 					</div>
+					<div class="p-2 info-user d-flex flex-column justify-content-center align-items-center">
+						<p>Adeline</p>
+						<p>delarte@roxy.fr</p>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="d-flex justify-content-center p-2">
+						<a href="{{ path("app_dashboard")}}">
+							<div class="fs-5">Tableau de bord</div>
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="accordion" id="accordionExample">
+						<div class="accordion-item">
+							<h2 class="accordion-header" id="headingTwo">
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									<a href="">Vos Comptes</a>
+								</button>
+							</h2>
+							<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+								<div class="accordion-body">
+									Compte Personnel
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 			<div class="Main "> {% block body %}{% endblock %}
