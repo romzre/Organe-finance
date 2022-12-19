@@ -71,7 +71,9 @@
 							</h2>
 							<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
 								<div class="accordion-body">
-									Compte Personnel
+									{% for account in bankAccounts %}
+										<p>{{ account.name }}</p>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
