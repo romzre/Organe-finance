@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -78,6 +80,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $token;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BankAccount::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $bankAccounts;
+
+    public function __construct()
+    {
+        $this->bankAccounts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -205,6 +217,36 @@ class User implements UserInterface
     public function setConfirm_password($confirm_password)
     {
         $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BankAccount>
+     */
+    public function getBankAccounts(): Collection
+    {
+        return $this->bankAccounts;
+    }
+
+    public function addBankAccount(BankAccount $bankAccount): self
+    {
+        if (!$this->bankAccounts->contains($bankAccount)) {
+            $this->bankAccounts[] = $bankAccount;
+            $bankAccount->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBankAccount(BankAccount $bankAccount): self
+    {
+        if ($this->bankAccounts->removeElement($bankAccount)) {
+            // set the owning side to null (unless already changed)
+            if ($bankAccount->getUser() === $this) {
+                $bankAccount->setUser(null);
+            }
+        }
 
         return $this;
     }
