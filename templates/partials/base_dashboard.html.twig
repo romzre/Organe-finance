@@ -70,9 +70,12 @@
 								</button>
 							</h2>
 							<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-								<div class="accordion-body">
+								<div class="accordion-body ">
 									{% for account in bankAccounts %}
-										<p>{{ account.name }}</p>
+										<p class="d-flex justify-content-between">
+											<a href=""><span class="d-block">{{ account.name }}</span></a>
+											<a href=""><span class="d-block">...</span></a>
+										</p>
 									{% endfor %}
 								</div>
 							</div>
