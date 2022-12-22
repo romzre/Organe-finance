@@ -1,0 +1,36 @@
+{% extends 'partials/base_dashboard.html.twig' %}
+
+{% block title %}Hello Dashboard
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<h1 class="border-bottom border-warning">Compte :
+				{{bankAccount.name|upper}}
+			</h1>
+		</div>
+		<div class="row ">
+			<div class="d-flex gap-4 my-4">
+				<div class="card w-25 rounded-5 shadow bg-gray-700">
+					<div class="p-2 fs-4  mx-3">Entrer</div>
+					<div class="p-2 fs-2 d-flex justify-content-end">
+						<span class="d-block mx-3 text-primary">2000€</span>
+					</div>
+				</div>
+				<div class="card w-25 rounded-5 shadow">
+					<div class="p-2 fs-4  mx-3 ">Sortie</div>
+					<div class="p-2 fs-2 d-flex justify-content-end">
+						<span class="d-block mx-3 text-danger">2000€</span>
+					</div>
+				</div>
+				<div class="card w-25 rounded-5 shadow">
+					<div class="p-2 fs-4 mx-3">Solde</div>
+					<div class="p-2 fs-2 d-flex justify-content-end">
+						<span class="d-block mx-3 text-info">2000€</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

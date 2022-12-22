@@ -9,6 +9,13 @@
 			<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord
 				{{app.user.username|upper}}</h1>
 		</div>
+		{% if message is defined %}
+			{% if message is not empty %}
+				<div class="row">
+					<div class="alert alert-warning">{{message}}</div>
+				</div>
+			{% endif %}
+		{% endif %}
 		<div class="row">
 			<div
 				class="d-flex justify-content-end">
@@ -41,7 +48,7 @@
 								{{ 
                         form_row(addBankAccountForm.name, {'label' : 'Nom du compte', 'attr': {
                     'placeholder': 'ex : Compte Personnel' }})
-																														}}
+																																						}}
 							</div>
 						</div>
 						<div class="modal-footer">

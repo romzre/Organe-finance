@@ -7,6 +7,9 @@ use App\Entity\User;
 use App\Repository\BankAccountRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DomCrawler\Form;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+
+use function PHPUnit\Framework\throwException;
 
 class ServiceBankAccount
 {
@@ -32,10 +35,20 @@ class ServiceBankAccount
 
     }
 
-    public function getAllActive(): array
+    public function getAllActive(User $user): array
     {
-        return $this->repository->findAll();
+        return $this->repository->findBy(
+            [
+                'user' => $user
+            ]
+        );
     }
 
+    public function getAccount(string $id) : BankAccount
+    {
+        $account = $this->repository->findOneBy(['id' => $id]);
+
+        return $account;
+    }
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\BankAccountRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,6 +42,16 @@ class BankAccount
      * @ORM\Column(type="boolean")
      */
     private $isActive;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Cycle::class, mappedBy="bankAccount", orphanRemoval=true)
+     */
+    private $cycles;
+
+    public function __construct()
+    {
+        $this->cycles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +102,36 @@ class BankAccount
     public function setIsActive(bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cycle>
+     */
+    public function getCycles(): Collection
+    {
+        return $this->cycles;
+    }
+
+    public function addCycle(Cycle $cycle): self
+    {
+        if (!$this->cycles->contains($cycle)) {
+            $this->cycles[] = $cycle;
+            $cycle->setBankAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCycle(Cycle $cycle): self
+    {
+        if ($this->cycles->removeElement($cycle)) {
+            // set the owning side to null (unless already changed)
+            if ($cycle->getBankAccount() === $this) {
+                $cycle->setBankAccount(null);
+            }
+        }
 
         return $this;
     }

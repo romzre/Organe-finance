@@ -46,7 +46,7 @@ class HomeController extends AbstractController
                 $errors = $form->getErrors();
             }
         }
-        $bankAccounts = $service->getAllActive();
+        $bankAccounts = $service->getAllActive($this->getUser());
         
         return $this->render('dashboard/index.html.twig', [
             "addBankAccountForm" => $form->createView(),
