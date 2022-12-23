@@ -1,0 +1,16 @@
+{% extends 'partials/base_dashboard.html.twig' %}
+
+{% block title %}Hello Dashboard
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord</h1>
+		</div>
+		
+		<div class="row">
+		{{form(CycleAddForm)}}
+		</div>
+	</div>
+</div>{% endblock %}

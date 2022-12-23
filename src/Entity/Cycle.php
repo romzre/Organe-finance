@@ -28,15 +28,20 @@ class Cycle
     private $dateEnd;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
      * @ORM\Column(type="float")
      */
     private $solde;
 
     /**
-     * @ORM\ManyToOne(targetEntity=bankAccount::class, inversedBy="cycles")
+     * @ORM\ManyToOne(targetEntity=BankAccount::class, inversedBy="cycles")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $bankAccount;
+    private $BankAccount;
 
     public function getId(): ?int
     {
@@ -67,6 +72,18 @@ class Cycle
         return $this;
     }
 
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
     public function getSolde(): ?float
     {
         return $this->solde;
@@ -79,14 +96,14 @@ class Cycle
         return $this;
     }
 
-    public function getBankAccount(): ?bankAccount
+    public function getBankAccount(): ?BankAccount
     {
-        return $this->bankAccount;
+        return $this->BankAccount;
     }
 
-    public function setBankAccount(?bankAccount $bankAccount): self
+    public function setBankAccount(?BankAccount $BankAccount): self
     {
-        $this->bankAccount = $bankAccount;
+        $this->BankAccount = $BankAccount;
 
         return $this;
     }

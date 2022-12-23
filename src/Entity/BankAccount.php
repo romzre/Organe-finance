@@ -44,7 +44,7 @@ class BankAccount
     private $isActive;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cycle::class, mappedBy="bankAccount", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Cycle::class, mappedBy="BankAccount", orphanRemoval=true)
      */
     private $cycles;
 
@@ -52,6 +52,7 @@ class BankAccount
     {
         $this->cycles = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -135,4 +136,8 @@ class BankAccount
 
         return $this;
     }
+
+ 
+
+
 }

@@ -73,7 +73,7 @@
 								<div class="accordion-body ">
 									{% for account in bankAccounts %}
 										<p class="d-flex justify-content-between">
-											<a href="{{ path("app_bank_account" , { 'IdbankAccount': account.id }) }}">
+											<a href="{{ path("app_bank_account" , { 'BankAccount': account.id }) }}">
 												<span class="d-block">{{ account.name }}</span>
 											</a>
 											<a href="">

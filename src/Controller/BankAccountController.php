@@ -14,22 +14,20 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class BankAccountController extends AbstractController
 {
     /**
-     * @Route("/bank/account/{IdbankAccount}", name="app_bank_account")
+     * @Route("/bank/account/{BankAccount}", name="app_bank_account")
      */
-    public function index(string $IdbankAccount, ServiceBankAccount $service): Response
+    public function index(string $BankAccount, ServiceBankAccount $serviceBankAccount): Response
     {
         // BankAccount
-        $bankAccounts = $service->getAllActive($this->getUser());
+        $bankAccounts = $serviceBankAccount->getAllBankAccountActive($this->getUser());
 
-        $bankAccount = $service->getAccount($IdbankAccount);
+        $bankAccount = $serviceBankAccount->getAccount($BankAccount);
 
         if ($bankAccount->getUser() !== $this->getUser()) 
         {
            throw new AccessDeniedException();
         }
 
-        // Cycle
-        
         return $this->render('bank_account/index.html.twig', [
             "bankAccounts" => $bankAccounts,
             "bankAccount" => $bankAccount,

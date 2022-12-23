@@ -2,53 +2,50 @@
 
 namespace App\Service;
 
-use App\Entity\BankAccount;
 use App\Entity\User;
-use App\Repository\BankAccountRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Service;
+use App\Entity\BankAccount;
 use Symfony\Component\DomCrawler\Form;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\BankAccountRepository;
 
-use function PHPUnit\Framework\throwException;
-
-class ServiceBankAccount
+class ServiceBankAccount extends Service
 {
-    private EntityManagerInterface $manager;
-    private BankAccountRepository $repository;
+    protected EntityManagerInterface $manager;
+    protected BankAccountRepository $repository;
 
-    public function __construct(EntityManagerInterface $manager , BankAccountRepository $repository)
+    public function __construct(EntityManagerInterface $manager, BankAccountRepository $repository)
     {
-        $this->manager =  $manager;
-        $this->repository =  $repository;
-
+        $this->manager = $manager;
+        $this->repository = $repository;
     }
 
 
-    public function addBankAccount($form , User $user): void
+    public function addBankAccount($form , $user): void
     {
         $account = $form;
         $account->setCreatedAt(new \DateTimeImmutable())
+                ->setIsActive(1)
                 ->setUser($user);
-
         $this->manager->persist($account);
         $this->manager->flush();
 
     }
 
-    public function getAllActive(User $user): array
-    {
-        return $this->repository->findBy(
-            [
-                'user' => $user
-            ]
-        );
-    }
+    // public function getAllActive(User $user): array
+    // {
+    //     return $this->repository->findBy(
+    //         [
+    //             'user' => $user
+    //         ]
+    //     );
+    // }
 
-    public function getAccount(string $id) : BankAccount
-    {
-        $account = $this->repository->findOneBy(['id' => $id]);
+    // public function getAccount(string $id) : BankAccount
+    // {
+    //     $account = $this->repository->findOneBy(['id' => $id]);
 
-        return $account;
-    }
+    //     return $account;
+    // }
 
 }
