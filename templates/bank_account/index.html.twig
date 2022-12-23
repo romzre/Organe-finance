@@ -7,15 +7,15 @@
 	<div class="container">
 		<div class="row">
 			<h1 class="border-bottom border-warning">Compte :
-				{{bankAccount.name|upper}}
+				{{BankAccount.name|upper}}
 			</h1>
 		</div>
 		{% if cycle is not defined %}
 			<div class="row">
 				<div class="d-flex justify-content-end">
 					<a href="
-					{{ path("app_cycle_new" , { 'BankAccount': bankAccount.id }) }}
-					">
+											{{ path("app_cycle_new" , { 'BankAccountId': BankAccount.id }) }}
+												">
 						<button class="btn btn-primary">Ajouter un cycle</button>
 					</a>
 				</div>
@@ -25,29 +25,38 @@
 			</div>
 		{% endif %}
 		{% if cycle is defined %}
-			<div class="row ">
-				<div class="d-flex gap-4 my-4">
-					<div class="card w-25 rounded-5 shadow bg-gray-700">
-						<div class="p-2 fs-4  mx-3">Entrer</div>
-						<div class="p-2 fs-2 d-flex justify-content-end">
-							<span class="d-block mx-3 text-primary">2000€</span>
+			{% if cycle is not empty %}
+				<div class="row">
+					<h2>Pèriode du:
+						{{ cycle.dateBegin|date("d - M - y") }}
+						au
+						{{ cycle.dateEnd|date("d - M - y") }}
+					</h2>
+				</div>
+				<div class="row ">
+					<div class="d-flex gap-4 my-4">
+						<div class="card w-25 rounded-5 shadow bg-gray-700">
+							<div class="p-2 fs-4  mx-3">Entrer</div>
+							<div class="p-2 fs-2 d-flex justify-content-end">
+								<span class="d-block mx-3 text-primary">€</span>
+							</div>
 						</div>
-					</div>
-					<div class="card w-25 rounded-5 shadow">
-						<div class="p-2 fs-4  mx-3 ">Sortie</div>
-						<div class="p-2 fs-2 d-flex justify-content-end">
-							<span class="d-block mx-3 text-danger">2000€</span>
+						<div class="card w-25 rounded-5 shadow">
+							<div class="p-2 fs-4  mx-3 ">Sortie</div>
+							<div class="p-2 fs-2 d-flex justify-content-end">
+								<span class="d-block mx-3 text-danger">€</span>
+							</div>
 						</div>
-					</div>
-					<div class="card w-25 rounded-5 shadow">
-						<div class="p-2 fs-4 mx-3">Solde</div>
-						<div class="p-2 fs-2 d-flex justify-content-end">
-							<span class="d-block mx-3 text-info">2000€</span>
+						<div class="card w-25 rounded-5 shadow">
+							<div class="p-2 fs-4 mx-3">Solde</div>
+							<div class="p-2 fs-2 d-flex justify-content-end">
+								<span class="d-block mx-3 text-info">{{cycle.solde}}€</span>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			{% endif %}
 		{% endif %}
-		<div class="row"></div>
+		
 	</div>
 </div>{% endblock %}

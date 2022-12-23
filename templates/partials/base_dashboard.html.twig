@@ -71,21 +71,34 @@
 							</h2>
 							<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
 								<div class="accordion-body ">
-									{% for account in bankAccounts %}
-										<p class="d-flex justify-content-between">
-											<a href="{{ path("app_bank_account" , { 'BankAccount': account.id }) }}">
+									{% for account in BankAccounts %}
+										<div class="d-flex justify-content-between align-items-center flex-nowrap">
+											<a href="{{ path("app_bank_account" , { 'BankAccountId': account.id }) }}">
 												<span class="d-block">{{ account.name }}</span>
 											</a>
-											<a href="">
-												<span class="d-block">...</span>
-											</a>
-										</p>
+												<div class="dropdown">
+													<button class="btn " type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+														...
+													</button>
+													<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+														<li>
+															<button class="dropdown-item" type="button">Archiver le compte</button>
+														</li>
+														<li>
+															<button class="dropdown-item" type="button">Supprimer le action</button>
+														</li>
+														<li>
+															<button class="dropdown-item" type="button">Something else here</button>
+														</li>
+													</ul>
+												</div>
+										</div>
 									{% endfor %}
 								</div>
 							</div>
 						</div>
 					</div>
-					{% if bankAccount is defined %}
+					{% if BankAccount is defined %}
 
 						<div class="row mt-3">
 							<div class="d-flex justify-content-center border-bottom p-2 no-gutters">

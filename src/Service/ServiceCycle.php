@@ -20,7 +20,7 @@ class ServiceCycle extends AbstractService
         $this->manager = $manager;
     }
 
-    public function addCycle($form , BankAccount $BankAccount)
+    public function addCycle($form , BankAccount $BankAccount): void
     {
         $cycle = $form;
         $cycle->setCreatedAt(new \DateTimeImmutable())
@@ -30,5 +30,20 @@ class ServiceCycle extends AbstractService
         $this->manager->flush();
     }
 
+    public function checkIfActiveExist($BankAccount): bool
+    {
+        $BankAccountActive = $this->manager->getRepository(BankAccount::class)->findOneBy([
+            'isActive' => 1
+        ]);
+
+        return empty($BankAccountActive) ? false : true; 
+    }
+
+    // public function getActiveCycle($BankAccount): Cycle
+    // {
+    //     return $this->manager->getRepository(BankAccount::class)->findOneBy([
+    //         'isActive' => 1
+    //     ]);
+    // }
 
 }
