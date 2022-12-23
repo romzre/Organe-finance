@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class ServiceCycle extends AbstractService
 {
     protected EntityManagerInterface $manager;
-    protected CycleRepository $repository;
+    // protected CycleRepository $repository;
 
-    public function __construct(EntityManagerInterface $manager , CycleRepository $repository)
+    public function __construct(EntityManagerInterface $manager 
+    // CycleRepository $repository
+    )
     {
-        $this->repository =  $repository;
+        // $this->repository =  $repository;
         $this->manager = $manager;
     }
 

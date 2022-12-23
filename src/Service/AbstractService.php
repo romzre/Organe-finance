@@ -63,5 +63,14 @@ abstract class AbstractService
         return $cycle;
     }
 
+    public function getCycle(Cycle $cycle)
+    {
+        $cycle = $this->manager->getRepository(Cycle::class)->find([
+            'id' => $cycle,
+        ]);
+
+        return $cycle;
+    }
+
 
 }

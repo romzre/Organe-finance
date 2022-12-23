@@ -34,6 +34,12 @@ class Category
      */
     private $transactions;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="categories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $User;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -94,6 +100,18 @@ class Category
                 $transaction->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }

@@ -98,7 +98,7 @@
 							</div>
 						</div>
 					</div>
-					{% if BankAccount is defined %}
+					{% if cycle is defined %}
 
 						<div class="row mt-3">
 							<div class="d-flex justify-content-center border-bottom p-2 no-gutters">
@@ -110,7 +110,7 @@
 								<div class="d-flex flex-column gap-2">
 
 									<div class="fs-5">
-										<a href="">
+										<a href="{{ path("app_transaction" , { "CycleId" : cycle.id  }) }}">
 											Transaction
 										</a>
 									</div>

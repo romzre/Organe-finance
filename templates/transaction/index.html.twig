@@ -1,20 +1,50 @@
-{% extends 'base.html.twig' %}
+{% extends 'partials/base_dashboard.html.twig' %}
 
-{% block title %}Hello TransactionController!{% endblock %}
+{% block title %}Transaction
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/ORGANES/organeFinance/src/Controller/TransactionController.php'|file_link(0) }}">src/Controller/TransactionController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/ORGANES/organeFinance/templates/transaction/index.html.twig'|file_link(0) }}">templates/transaction/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+	<div class="container">
+		<div class="row">
+			<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord
+				{{app.user.username|upper}}</h1>
+		</div>
+		<div class="row">
+			<h2>Ajouter une transaction</h2>
+		</div>
+		<div class="row p-2">
+			<div class="col-4 d-flex flex-column justify-content-center shadow border rounded-3 p-4">
+				{{form_start(form)}}
+				<div class="form-group">
+					{{ 
+                        form_row(form.TypeTransaction, {'label' : 'Type de transaction'})
+																																																												}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.WayTransaction, {'label' : 'Moyen de paiement' })
+																																																																	}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.libelle, {'label' : 'Libellé', 'attr': {
+                    'placeholder': 'ex : cadeaux de noêl' }})
+																																																																						}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.sum, {'label' : 'Somme', 'attr': {
+                    'placeholder': 'ex : 330' }})
+																																																																						}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.dateTransaction, {'label' : 'Date', })
+																																																																	}}
+				</div>
+				<button type="submit" class="btn btn-primary">Enregistrer</button>
+				{{form_end(form)}}
+			</div>
+		</div>
+	</div>
+</div></div>{% endblock %}
