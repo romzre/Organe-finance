@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CycleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CycleRepository::class)
@@ -19,11 +20,19 @@ class Cycle
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Assert\Range(
+     *      min = "now", minMessage="Vous ne pouvez pas choisir une date antèrieur"
+     * )
      */
     private $dateBegin;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Assert\Range(
+     *      minPropertyPath="dateBegin", minMessage="Vous ne pouvez pas choisir une date antèrieur à la date de début"
+     * )
      */
     private $dateEnd;
 
@@ -42,6 +51,11 @@ class Cycle
      * @ORM\JoinColumn(nullable=false)
      */
     private $BankAccount;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -104,6 +118,18 @@ class Cycle
     public function setBankAccount(?BankAccount $BankAccount): self
     {
         $this->BankAccount = $BankAccount;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

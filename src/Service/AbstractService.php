@@ -8,29 +8,32 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
 
 
-class Service 
+abstract class AbstractService 
 {
     protected EntityManagerInterface $manager;
+ 
 
-    public function __construct(EntityManagerInterface $manager , BankAccountRepository $repositoryBankAccount)
+    public function getManager(): EntityManagerInterface
     {
-        $this->manager = $manager;
+        return $this->manager;
     }
 
     public function getAllBankAccountActive(User $user): array
     {
-        return $this->manager->getRepository(BankAccount::class)->findBy(
+        return $this->getManager()->getRepository(BankAccount::class)->findBy(
             [
                 'user' => $user
             ]
         );
-    }
+    } 
 
     public function getAccount(string $id) : BankAccount
     {
-        $account = $this->manager->getRepository(BankAccount::class)->findOneBy(['id' => $id]);
+        $account = $this->getManager()->getRepository(BankAccount::class)->findOneBy(['id' => $id]);
 
         return $account;
     }
+
+
 
 }

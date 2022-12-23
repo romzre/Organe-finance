@@ -28,6 +28,7 @@ class HomeController extends AbstractController
      */
     public function dashboard(Request $request , ServiceBankAccount $service): Response
     {
+
         $errors = [];
         $bankAccount = new BankAccount();
         
@@ -48,7 +49,7 @@ class HomeController extends AbstractController
             }
         }
         $bankAccounts = $service->getAllBankAccountActive($this->getUser());
-        
+      
         return $this->render('dashboard/index.html.twig', [
             "addBankAccountForm" => $form->createView(),
             "bankAccounts" => $bankAccounts,

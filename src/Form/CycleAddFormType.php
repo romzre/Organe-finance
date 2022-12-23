@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Cycle;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -12,8 +13,8 @@ class CycleAddFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateBegin')
-            ->add('dateEnd')
+            ->add('dateBegin',  DateType::class, ['widget' => 'single_text'])
+            ->add('dateEnd', DateType::class, ['widget' => 'single_text'])
             ->add('solde')
         ;
     }

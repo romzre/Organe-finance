@@ -3,25 +3,23 @@
 namespace App\Service;
 
 use App\Entity\User;
-use App\Service\Service;
+use App\Service\AbstractService;
 use App\Entity\BankAccount;
 use Symfony\Component\DomCrawler\Form;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
 
-class ServiceBankAccount extends Service
+class ServiceBankAccount extends AbstractService
 {
     protected EntityManagerInterface $manager;
-    protected BankAccountRepository $repository;
 
-    public function __construct(EntityManagerInterface $manager, BankAccountRepository $repository)
+    public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
-        $this->repository = $repository;
     }
 
 
-    public function addBankAccount($form , $user): void
+    public function addBankAccount($form , User $user): void
     {
         $account = $form;
         $account->setCreatedAt(new \DateTimeImmutable())
@@ -32,20 +30,6 @@ class ServiceBankAccount extends Service
 
     }
 
-    // public function getAllActive(User $user): array
-    // {
-    //     return $this->repository->findBy(
-    //         [
-    //             'user' => $user
-    //         ]
-    //     );
-    // }
-
-    // public function getAccount(string $id) : BankAccount
-    // {
-    //     $account = $this->repository->findOneBy(['id' => $id]);
-
-    //     return $account;
-    // }
+  
 
 }
