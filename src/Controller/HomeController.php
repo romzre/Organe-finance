@@ -28,9 +28,10 @@ class HomeController extends AbstractController
      */
     public function dashboard(Request $request , ServiceBankAccount $service): Response
     {
+
         $errors = [];
         $bankAccount = new BankAccount();
-
+        
         $form = $this->createForm(AddBankAccountFormType::class , $bankAccount);
 
         $form->handleRequest($request);
@@ -39,18 +40,19 @@ class HomeController extends AbstractController
         {
             if($form->isValid())
             {
-                $service->addBankAccount($form->getData() , $this->getUser());
+            
+                $service->addBankAccount($form->getData(), $this->getUser());
             }
             else
             {
                 $errors = $form->getErrors();
             }
         }
-        $bankAccounts = $service->getAllActive();
-        
+        $BankAccounts = $service->getAllBankAccountActive($this->getUser());
+      
         return $this->render('dashboard/index.html.twig', [
             "addBankAccountForm" => $form->createView(),
-            "bankAccounts" => $bankAccounts,
+            "BankAccounts" => $BankAccounts,
             "errors" => $errors
         ]);
     }
