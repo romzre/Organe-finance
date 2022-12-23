@@ -32,10 +32,11 @@ class ServiceCycle extends AbstractService
         $this->manager->flush();
     }
 
-    public function checkIfActiveExist($BankAccount): bool
+    public function checkIfCycleActiveExist($BankAccount): bool
     {
-        $BankAccountActive = $this->manager->getRepository(BankAccount::class)->findOneBy([
-            'isActive' => 1
+        $BankAccountActive = $this->manager->getRepository(Cycle::class)->findOneBy([
+            'isActive' => 1,
+            "BankAccount" => $BankAccount
         ]);
 
         return empty($BankAccountActive) ? false : true; 

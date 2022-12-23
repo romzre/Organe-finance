@@ -10,35 +10,35 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DomCrawler\Form;
 
 class CycleController extends AbstractController
 {
     /**
      * @Route("/{BankAccountId}/cycle", name="app_cycle_new")
      */
-    public function index(BankAccount $BankAccountId, ServiceCycle $service ,  Request $request): Response
+    public function index(BankAccount $BankAccountId, ServiceCycle $service,  Request $request): Response
     {
         $bankAccounts = $service->getAllBankAccountActive($this->getUser());
 
         $data = [];
         $cycle = new Cycle();
 
-        $form = $this->createForm(CycleAddFormType::class , $cycle);
-        
+        $form = $this->createForm(CycleAddFormType::class, $cycle);
+
         $form->handleRequest($request);
-        if ($form->isSubmitted()) 
-        {
-            if($form->isValid())
-            {
-                if($service->checkIfActiveExist($BankAccountId))
-                {
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                if ($service->checkIfCycleActiveExist($BankAccountId)) {
+
                     $ActiveCycle = $service->getActiveCycle($BankAccountId);
-                    $data["ActiveCycle"] = $ActiveCycle;
-                }
-                else
-                {   
+                    $data["cycle"] = $ActiveCycle;
+                } else {
+
                     $service->addCycle($form->getData(), $BankAccountId);
                     $data['message'] = $this->addFlash("success", "Votre cycle a bien été ajouter");
+                    $ActiveCycle = $service->getActiveCycle($BankAccountId);
+                    $data["cycle"] = $ActiveCycle;
                 }
             }
         }
