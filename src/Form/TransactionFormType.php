@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class TransactionFormType extends AbstractType
 {
@@ -55,12 +56,11 @@ class TransactionFormType extends AbstractType
             ->add('libelle')
             ->add('sum')
             ->add('dateTransaction',  DateType::class, ['widget' => 'single_text'])
-
+            // ->add('Periodicity')
 
 
             // ->add('Periodicity')
             // ->add('createdAt')
-            // ->add('Cycle')
         ;
     }
 
@@ -68,7 +68,6 @@ class TransactionFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Transaction::class,
-            'user' => User::class
         ]);
     }
 }

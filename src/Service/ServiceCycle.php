@@ -12,16 +12,24 @@ use Doctrine\ORM\EntityManagerInterface;
 class ServiceCycle extends AbstractService
 {
     protected EntityManagerInterface $manager;
-    // protected CycleRepository $repository;
+    protected CycleRepository $repository;
 
-    public function __construct(EntityManagerInterface $manager 
-    // CycleRepository $repository
+    public function __construct(
+        EntityManagerInterface $manager ,
+        CycleRepository $repository
     )
     {
-        // $this->repository =  $repository;
+        $this->repository =  $repository;
         $this->manager = $manager;
     }
-
+    
+    /**
+     * addCycle
+     *
+     * @param  mixed $form
+     * @param  mixed $BankAccount
+     * @return void
+     */
     public function addCycle($form , BankAccount $BankAccount): void
     {
         $cycle = $form;
@@ -31,7 +39,13 @@ class ServiceCycle extends AbstractService
         $this->manager->persist($cycle);
         $this->manager->flush();
     }
-
+    
+    /**
+     * checkIfCycleActiveExist
+     *
+     * @param  mixed $BankAccount
+     * @return bool
+     */
     public function checkIfCycleActiveExist($BankAccount): bool
     {
         $BankAccountActive = $this->manager->getRepository(Cycle::class)->findOneBy([
@@ -42,11 +56,5 @@ class ServiceCycle extends AbstractService
         return empty($BankAccountActive) ? false : true; 
     }
 
-    // public function getActiveCycle($BankAccount): Cycle
-    // {
-    //     return $this->manager->getRepository(BankAccount::class)->findOneBy([
-    //         'isActive' => 1
-    //     ]);
-    // }
 
 }

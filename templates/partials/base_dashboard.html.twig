@@ -6,6 +6,7 @@
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -76,22 +77,22 @@
 											<a href="{{ path("app_bank_account" , { 'BankAccountId': account.id }) }}">
 												<span class="d-block">{{ account.name }}</span>
 											</a>
-												<div class="dropdown">
-													<button class="btn " type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-														...
-													</button>
-													<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-														<li>
-															<button class="dropdown-item" type="button">Archiver le compte</button>
-														</li>
-														<li>
-															<button class="dropdown-item" type="button">Supprimer le action</button>
-														</li>
-														<li>
-															<button class="dropdown-item" type="button">Something else here</button>
-														</li>
-													</ul>
-												</div>
+											<div class="dropdown">
+												<button class="btn " type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+													...
+												</button>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+													<li>
+														<button class="dropdown-item" type="button">Archiver le compte</button>
+													</li>
+													<li>
+														<button class="dropdown-item" type="button">Supprimer le action</button>
+													</li>
+													<li>
+														<button class="dropdown-item" type="button">Something else here</button>
+													</li>
+												</ul>
+											</div>
 										</div>
 									{% endfor %}
 								</div>
@@ -110,7 +111,7 @@
 								<div class="d-flex flex-column gap-2">
 
 									<div class="fs-5">
-										<a href="{{ path("app_transaction" , { "CycleId" : cycle.id  }) }}">
+										<a href="{{ path("app_transaction_index" , { "CycleId" : cycle.id }) }}">
 											Transaction
 										</a>
 									</div>
