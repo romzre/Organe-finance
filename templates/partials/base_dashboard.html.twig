@@ -101,31 +101,27 @@
 					</div>
 					{% if cycle is defined %}
 
-						<div class="row mt-3">
-							<div class="d-flex justify-content-center border-bottom p-2 no-gutters">
+						<div class="row mt-3 ">
+							<div class="d-flex justify-content-center p-2 ">
 								<div class="fs-5 ">Options</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="p-2 d-flex flex-column justify-content-center align-items-center">
-								<div class="d-flex flex-column gap-2">
-
-									<div class="fs-5">
-										<a href="{{ path("app_transaction_index" , { "CycleId" : cycle.id }) }}">
-											Transaction
-										</a>
-									</div>
-									<div class="fs-5">
-										<a href="">
-											Categorie
-										</a>
-									</div>
-									<div class="fs-5">
-										<a href="">
-											Budget
-										</a>
-									</div>
-
+						<div class="p-2 d-flex flex-column justify-content-center align-items-center ">
+							<div class="row no-gutters">
+								<div class="bg-primary bg-gradient text-center p-2">
+									<a class="" href="{{ path("app_transaction_index" , { "CycleId" : cycle.id }) }}">
+										Transaction
+									</a>
+								</div>
+								<div class="bg-primary bg-gradient text-center p-2">
+									<a href="">
+										Categorie
+									</a>
+								</div>
+								<div class="bg-primary bg-gradient text-center p-2">
+									<a href="">
+										Budget
+									</a>
 								</div>
 							</div>
 						</div>

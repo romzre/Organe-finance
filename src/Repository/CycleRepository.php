@@ -39,6 +39,9 @@ class CycleRepository extends ServiceEntityRepository
         }
     }
 
+
+
+
 //    /**
 //     * @return Cycle[] Returns an array of Cycle objects
 //     */

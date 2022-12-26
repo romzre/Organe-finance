@@ -1,0 +1,59 @@
+{% extends 'partials/base_dashboard.html.twig' %}
+
+{% block title %}Transaction
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord
+				{{app.user.username|upper}}</h1>
+		</div>
+		<div class="row">
+			<h2>Ajouter une transaction</h2>
+		</div>
+		<div class="row p-2">
+			<div class="col-6 d-flex flex-column justify-content-center shadow border rounded-3 p-4">
+				{{form_start(form)}}
+				<div class="form-group">
+					{{ 
+                        form_row(form.TypeTransaction, {'label' : 'Type de transaction' })
+																																																												}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.WayTransaction, {'label' : 'Moyen de paiement' })
+																																																																	}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.Category, {'label' : 'Catégories' })
+																																																																	}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.libelle, {'label' : 'Libellé', 'attr': {
+                    'placeholder': 'ex : cadeaux de noêl' }})
+																																																																											}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.sum, {'label' : 'Somme', 'attr': {
+                    'placeholder': 'ex : 330' }})
+																																																																											}}
+				</div>
+				<div class="form-group">
+					{{ 
+                        form_row(form.dateTransaction, {'label' : 'Date', })
+																																																																	}}
+				</div>
+				<input type="hidden" name="cycle" value="{{cycle.id}}">
+				<div class="d-flex justify-content-between">
+					<a href="{{ path('app_transaction_index', { "CycleId" : cycle.id } ) }}" class="btn btn-secondary">Annuler</a>
+					<button type="submit" class="btn btn-primary">Enregistrer</button>
+				</div>
+				{{form_end(form)}}
+			</div>
+		</div>
+	</div>
+</div></div>{% endblock %}

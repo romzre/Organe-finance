@@ -34,13 +34,13 @@
 					{{ 
                         form_row(form.libelle, {'label' : 'Libellé', 'attr': {
                     'placeholder': 'ex : cadeaux de noêl' }})
-																																																																						}}
+																																																																											}}
 				</div>
 				<div class="form-group">
 					{{ 
                         form_row(form.sum, {'label' : 'Somme', 'attr': {
                     'placeholder': 'ex : 330' }})
-																																																																						}}
+																																																																											}}
 				</div>
 				<div class="form-group">
 					{{ 
@@ -48,7 +48,10 @@
 																																																																	}}
 				</div>
 				<input type="hidden" name="cycle" value="{{cycle.id}}">
-				<button type="submit" class="btn btn-primary">Enregistrer</button>
+				<div class="d-flex justify-content-between">
+					<a href="{{ path('app_transaction_index', { "CycleId" : cycle.id } ) }}" class="btn btn-secondary">Annuler</a>
+					<button type="submit" class="btn btn-primary">Enregistrer</button>
+				</div>
 				{{form_end(form)}}
 			</div>
 		</div>

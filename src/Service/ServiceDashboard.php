@@ -42,6 +42,15 @@ class ServiceDashboard extends AbstractService
             $data['BankAccount'] = $BankAccount;
             $data['Cycle'] = $Cycle;
         }
+        if(!empty($options['TransactionId']))
+        {
+            $Transaction = $options['TransactionId'];
+            $Cycle = $this->CycleRepository->findOneBy(['id' => $Transaction->getCycle()->getId()]);
+            $BankAccount = $Cycle->getBankAccount();
+            $data['Cycle'] = $Cycle;
+            $data['BankAccount'] = $BankAccount;
+
+        }
         return $data;
     }
 

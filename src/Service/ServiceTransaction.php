@@ -13,10 +13,12 @@ use DateTimeImmutable;
 class ServiceTransaction extends AbstractService
 {
     protected EntityManagerInterface $manager;
+    private TransactionRepository $transactionRepository;
 
-    public function __construct(EntityManagerInterface $manager )
+    public function __construct(EntityManagerInterface $manager, TransactionRepository $transactionRepository )
     {
         $this->manager = $manager;
+        $this->transactionRepository = $transactionRepository;
     }
 
     public function add($form , Cycle $cycle )
@@ -29,4 +31,18 @@ class ServiceTransaction extends AbstractService
 
     }
 
+    public function editTransaction(Transaction $transaction): void
+    {
+        $this->manager->persist($transaction);
+        $this->manager->flush();
+        
+    }
+  
+
+    public function delete(Transaction $transaction): void
+    {
+       
+        $this->transactionRepository->remove($transaction, true);
+        
+    }
 }
