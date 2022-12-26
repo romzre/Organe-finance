@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BankAccount;
 use App\Service\ServiceBankAccount;
 use App\Form\AddBankAccountFormType;
+use App\Service\ServiceDashboard;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,35 +27,36 @@ class HomeController extends AbstractController
      /**
      * @Route("/dashboard", name="app_dashboard")
      */
-    public function dashboard(Request $request , ServiceBankAccount $service): Response
+    public function dashboard(ServiceDashboard $serviceDashboard ,Request $request , ServiceBankAccount $serviceBankAccount): Response
     {
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), []);
 
         $errors = [];
         $bankAccount = new BankAccount();
         
         $form = $this->createForm(AddBankAccountFormType::class , $bankAccount);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted()) 
         {
             if($form->isValid())
             {
-            
-                $service->addBankAccount($form->getData(), $this->getUser());
+                $serviceBankAccount->addBankAccount($form->getData(), $this->getUser());
+
             }
             else
             {
                 $errors = $form->getErrors();
             }
         }
-        $BankAccounts = $service->getAllBankAccountActive($this->getUser());
+
+
+        $data = [];
+        $data['errors'] = $errors;
+        $data['BankAccounts'] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data['addBankAccountForm'] = $form->createView();
       
-        return $this->render('dashboard/index.html.twig', [
-            "addBankAccountForm" => $form->createView(),
-            "BankAccounts" => $BankAccounts,
-            "errors" => $errors
-        ]);
+        return $this->render('dashboard/index.html.twig', $data );
+
     }
 
 }

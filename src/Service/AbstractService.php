@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use App\Entity\Cycle;
 use App\Entity\BankAccount;
+use App\Entity\Transaction;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
 
@@ -60,8 +61,30 @@ abstract class AbstractService
             'BankAccount' => $BankAccount
         ]);
 
+    
+
         return $cycle;
     }
+
+    public function getCycle(Cycle $cycle)
+    {
+        $cycle = $this->manager->getRepository(Cycle::class)->find([
+            'id' => $cycle,
+        ]);
+
+
+        return $cycle;
+    }
+
+
+    public function getTransactionsByCycle(Cycle $cycle): array
+    {
+        return $this->getManager()->getRepository(Transaction::class)->findBy(
+            [
+                'Cycle' => $cycle
+            ]
+        );
+    } 
 
 
 }
