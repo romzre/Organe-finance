@@ -60,6 +60,7 @@ abstract class AbstractService
             'isActive' => 1,
             'BankAccount' => $BankAccount
         ]);
+
     
 
         return $cycle;
@@ -71,8 +72,10 @@ abstract class AbstractService
             'id' => $cycle,
         ]);
 
+
         return $cycle;
     }
+
 
     public function getTransactionsByCycle(Cycle $cycle): array
     {
@@ -82,5 +85,6 @@ abstract class AbstractService
             ]
         );
     } 
+
 
 }

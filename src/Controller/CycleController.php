@@ -44,7 +44,6 @@ class CycleController extends AbstractController
         $data["CycleAddForm"] = $form->createView();
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
-    
         return $this->render('cycle/add.html.twig', $data);
     }
 }

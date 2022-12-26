@@ -13,6 +13,7 @@ class CycleControllerTest extends WebTestCase
     private CycleRepository $repository;
     private string $path = '/cycle/';
 
+
     // protected function setUp(): void
     // {
     //     $this->client = static::createClient();
@@ -138,4 +139,5 @@ class CycleControllerTest extends WebTestCase
     //     self::assertSame($originalNumObjectsInRepository, count($this->repository->findAll()));
     //     self::assertResponseRedirects('/cycle/');
     // }
+
 }

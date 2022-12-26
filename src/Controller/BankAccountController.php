@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 
 
-
 class BankAccountController extends AbstractController
 {
     /**
@@ -26,7 +25,6 @@ class BankAccountController extends AbstractController
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
         $data["cycle"] = $BankAccountsAndCycleDashboard['Cycle'];
-        
         return $this->render('bank_account/index.html.twig', $data);
     }
 }

@@ -41,6 +41,7 @@ class HomeController extends AbstractController
             if($form->isValid())
             {
                 $serviceBankAccount->addBankAccount($form->getData(), $this->getUser());
+
             }
             else
             {
@@ -48,12 +49,14 @@ class HomeController extends AbstractController
             }
         }
 
+
         $data = [];
         $data['errors'] = $errors;
         $data['BankAccounts'] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data['addBankAccountForm'] = $form->createView();
       
         return $this->render('dashboard/index.html.twig', $data );
+
     }
 
 }
