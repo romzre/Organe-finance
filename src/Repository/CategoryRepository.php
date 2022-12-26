@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Category;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Category>
@@ -37,6 +38,17 @@ class CategoryRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return QueryBuilder 
+     */
+    public function getCategoriesByUser($user): QueryBuilder
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('c.User = :user')
+            ->setParameter('user', $user);
+        return $query;
     }
 
 //    /**

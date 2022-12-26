@@ -38,12 +38,10 @@ class ServiceDashboard extends AbstractService
         {
             $BankAccount =  $this->getAccount($options['BankAccountId']);
             $Cycle =  $this->getActiveCycle($BankAccount);
-            
+
             $data['BankAccount'] = $BankAccount;
             $data['Cycle'] = $Cycle;
         }
-
-
         return $data;
     }
 
