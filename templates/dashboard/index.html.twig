@@ -1,34 +1,76 @@
-{% extends 'base.html.twig' %}
+{% extends 'partials/base_dashboard.html.twig' %}
 
 {% block title %}Hello Dashboard
 {% endblock %}
 
 {% block body %}
-	<main class="container ">
-		<div class="row my-5 ">
-			<div class="boxH">
-				<h1>Bonjour {{app.user.username}} </h1>
+	<div class="container">
+		<div class="row">
+			<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord
+				{{app.user.username|upper}}</h1>
+		</div>
+		{% if message is defined %}
+			{% if message is not empty %}
+				<div class="row">
+					<div class="alert alert-warning">{{message}}</div>
+				</div>
+			{% endif %}
+		{% endif %}
+		<div class="row">
+			<div
+				class="d-flex justify-content-end">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddBankAccountModal">
+					Créer un compte
+				</button>
 			</div>
 		</div>
+		<div
+			class="row">
+			<!-- Modal -->
+			<div class="modal fade" id="AddBankAccountModal" tabindex="-1" aria-labelledby="AddBankAccountModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header ">
+							<h5 class="modal-title" id="AddBankAccountModalLabel">Créer un compte</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							{% if errors is not empty %}
+								{% for error in erros %}
+									<span class="error">{{ error.message }}</span>
+								{% endfor %}
+							{% endif %}
+							{{form_start(addBankAccountForm)}}
+							<div class="form-group">
+								{{ 
+                        form_row(addBankAccountForm.name, {'label' : 'Nom du compte', 'attr': {
+                    'placeholder': 'ex : Compte Personnel' }})
 
-		<div class="row my-5 ">
-			<div class="d-flex justify-content-center">
-				<div class="bloc1 bg-secondary my-auto ">
-					<div>
-						<h2>Organe Finance</h2>
-						<p>Lorem ipsum dolor sit amet consecter asidfuej ffafjajioe</p>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quisquam saepe eos voluptas et veniam nisi distinctio beatae tem?</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate deleniti enim officia voluptatem quae, animi, vitae quaerat, nostrum a optio ratione? Ulla</p>
-					</div>
-				</div>
-				<div class="bloc2">
-					<div>
-						<div>
-							<img src="https://via.placeholder.com/500" alt="">
+																																																						}}
+
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+							<button type="submit" class="btn btn-success">Enregistrer</button>
+							{{form_end(addBankAccountForm)}}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</main>
-{% endblock %}
+		<div class="row">
+			<div class="d-flex gap-4">
+				{% for BankAccount in BankAccounts %}
+					<div class="border shadow p-5">
+						<div class="row">
+							<h4>{{ BankAccount.name }}</h4>
+						</div>
+					
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

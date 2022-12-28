@@ -1,0 +1,72 @@
+{% extends 'partials/base_dashboard.html.twig' %}
+
+{% block title %}Category index
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<h1 class=" text-primary border-bottom border-warning">Compte : {{BankAccount.name}} > Catégories</h1>
+		</div>
+		<div class="row">
+			<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id} )}}">{{BankAccount.name}}</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">Catégories</li>
+				</ol>
+			</nav>
+
+		</div>
+		<div class="row">
+			<h2>Toutes les catégories</h2>
+		</div>
+		<div class="row">
+			<div class="d-flex justify-content-end p-2">
+				<a href="{{ path("app_category_new", {"CycleId": cycle.id}) }}">
+					<button class="btn btn-primary gap-1 d-flex justify-content-center align-items-center">
+						Ajouter une catégorie<span class="material-icons">
+							add_circle
+						</span>
+					</button>
+				</a>
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Label</th>
+					<th>Color</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for category in categories %}
+					<tr>
+						<td>{{ category.Label }}</td>
+						<td class="">
+							<div class=""><input class="" type="color" value="{{ category.Color }}" disabled></div></td>
+
+						<td>
+							<a href="{{ path('app_category_show', {'id': category.id}) }}">
+								<span class="material-icons  bg-info p-1 text-light rounded">
+									visibility
+								</span>
+							</a>
+
+							<a href="{{ path('app_category_edit', {'id': category.id , "CycleId" : cycle.id }) }}">
+
+								<span class="material-icons  bg-secondary p-1 text-light rounded">edit</span>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">Pas de catégorie enregistrer</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

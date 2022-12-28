@@ -1,0 +1,103 @@
+{% extends 'partials/base_dashboard.html.twig' %}
+
+{% block title %}Hello Dashboard
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<h1 class=" text-primaryborder-bottom border-warning">Compte :
+				{{BankAccount.name|upper}}
+			</h1>
+		</div>
+		<div class="row text-start">
+			<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="#">{{BankAccount.name}}</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">Tableau de bord</li>
+				</ol>
+			</nav>
+		</div>
+		{% if cycle is defined %}
+			{% if cycle is empty %}
+				<div class="row">
+					<div class="d-flex justify-content-end gap-2">
+						<a href="{{ path("app_cycle_index" , { 'BankAccountId': BankAccount.id }) }}">
+							<button class="btn btn-secondary">Historique</button>
+						</a>
+						<a href="{{ path("app_cycle_new" , { 'BankAccountId': BankAccount.id }) }}">
+							<button class="btn btn-primary">Ajouter un cycle</button>
+						</a>
+
+					</div>
+				</div>
+				<div class="row">
+					<img class="rounded mx-auto d-block" src="{{ asset('build/img/no-session.jpg') }}" alt="">
+				</div>
+			{% endif %}
+
+		{% endif %}
+		{% if cycle is defined %}
+			{% if cycle is not empty %}
+				<div class="row">
+					<h2>Pèriode du:
+						{{ cycle.dateBegin|format_datetime('full', 'none', locale='fr') }}
+						au
+						{{ cycle.dateEnd|format_datetime('full', 'none', locale='fr') }}
+					</h2>
+				</div>
+				<div class="row ">
+					<div class="d-flex gap-4 my-4">
+						<div class="card w-25 rounded-5 shadow bg-gray-700">
+							<div class="p-2 fs-4  mx-3">Entrer</div>
+							<div class="p-2 fs-2 d-flex justify-content-end">
+								<span class="d-block mx-3 text-primary">
+									{% if Entry is not empty %}
+										{{ Entry }}
+									{% else %}
+										0
+									{% endif %}€</span>
+							</div>
+						</div>
+						<div class="card w-25 rounded-5 shadow">
+							<div class="p-2 fs-4  mx-3 ">Sortie</div>
+							<div class="p-2 fs-2 d-flex justify-content-end">
+								<span class="d-block mx-3 text-danger">
+									{% if Out is not empty %}
+										{{ Out }}
+									{% endif %}€</span>
+
+							</div>
+						</div>
+						<div class="card w-25 rounded-5 shadow">
+							<div class="p-2 fs-4 mx-3">Solde</div>
+							<div class="p-2 fs-2 d-flex justify-content-end">
+
+								<span class="d-block mx-3 text-info">
+									{% if Out is not empty %}
+										{% if Entry is defined and Entry is not empty %}
+											{{ Entry - Out }}
+										{% else %}
+											{{ cycle.solde - Out }}
+										{% endif %}
+									{% else %}
+										{{cycle.solde}}
+									{% endif %}€</span>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endif %}
+		<div class="row p-4 ">
+		
+			<div class="w-25 border p-4 shadow">
+				<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
+				{{ render_chart(chart) }}
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

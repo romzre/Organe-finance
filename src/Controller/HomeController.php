@@ -2,9 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\BankAccount;
+use App\Service\ServiceBankAccount;
+use App\Form\AddBankAccountFormType;
+use App\Service\ServiceDashboard;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 class HomeController extends AbstractController
 {
@@ -20,10 +27,38 @@ class HomeController extends AbstractController
      /**
      * @Route("/dashboard", name="app_dashboard")
      */
-    public function dashboard(): Response
+    public function dashboard(ServiceDashboard $serviceDashboard ,Request $request , ServiceBankAccount $serviceBankAccount): Response
     {
-        return $this->render('dashboard/index.html.twig', [
-        ]);
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), []);
+
+        
+
+        $errors = [];
+        $bankAccount = new BankAccount();
+        
+        $form = $this->createForm(AddBankAccountFormType::class , $bankAccount);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) 
+        {
+            if($form->isValid())
+            {
+                $serviceBankAccount->addBankAccount($form->getData(), $this->getUser());
+
+            }
+            else
+            {
+                $errors = $form->getErrors();
+            }
+        }
+
+
+        $data = [];
+        $data['errors'] = $errors;
+        $data['BankAccounts'] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data['addBankAccountForm'] = $form->createView();
+      
+        return $this->render('dashboard/index.html.twig', $data );
+
     }
 
 }

@@ -1,0 +1,87 @@
+{% extends 'partials/base_dashboard.html.twig' %}
+
+{% block title %}Transaction
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<div class="row">
+
+		<h1 class="text-primary text-primary border-bottom border-warning">Compte : {{BankAccount.name}} > Transaction</h1>
+	</div>
+	<div class="row">
+		<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id}  )}}">{{BankAccount.name}}</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Transactions</li>
+			</ol>
+		</nav>
+
+	</div>
+	<div class="row">
+		<h2>Toutes les transactions</h2>
+	</div>
+	<div class="row">
+		<div class="d-flex justify-content-end p-2">
+			<a href="{{ path("app_transaction_new" , {"CycleId":cycle.id }) }}">
+				<button class="btn btn-primary gap-1 d-flex justify-content-center align-items-center">
+					Ajouter une transaction<span class="material-icons">
+						add_circle
+					</span>
+				</button>
+			</a>
+		</div>
+	</div>
+	<div class="row p-2">
+		{% if transactions is not empty %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Type</th>
+						<th scope="col">Somme</th>
+						<th scope="col">Libellé</th>
+						<th scope="col">Catégorie</th>
+						<th scope="col">Moyen</th>
+						<th scope="col">Date</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for transaction in transactions %}
+						<tr>
+							<td >
+								{% if transaction.TypeTransaction.Label == "Entrer" %}
+									<span class="material-icons text-light" style="background: green">arrow_forward</span>
+								{% endif %}
+								{% if transaction.TypeTransaction.Label == "Sortie" %}
+									<span class="material-icons text-light" style="background: red">arrow_back</span>
+								{% endif %}
+								{{transaction.TypeTransaction.Label}}
+							</td>
+					</td>
+					<td class=" text-start">{{transaction.sum}}€</td>
+					<td>{{transaction.libelle}}</td>
+					<td>
+						<span style="background:{{transaction.Category.Color}}" class="badge">{{transaction.Category.Label}}</span>
+					</td>
+					<td>{{transaction.WayTransaction.Label}}</td>
+					<td>{{transaction.dateTransaction|date("d-m-y")}}</td>
+					<td>
+						<a href="{{ path("app_transaction_edit" , { "TransactionId" : transaction.id } ) }}">
+							<span class="material-icons bg-secondary p-1 text-light rounded">
+								edit
+							</span>
+						</a>
+						<a href="{{ path("app_transaction_delete" , { "TransactionId" : transaction.id } ) }}">
+							<span class="material-icons bg-warning p-1 text-light rounded">
+								delete
+							</span>
+						</a>
+					</td>
+				</tbody>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>{% endif %}</div></div></div></div>{% endblock %}

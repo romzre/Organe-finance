@@ -10,5 +10,9 @@ import './bootstrap';
 import './styles/global.scss';
 import './styles/app.scss';
 import './styles/nav.scss';
+import './styles/layout_dashboard.scss';
+
+
+require('./scripts/modal');
 
 // start the Stimulus application
