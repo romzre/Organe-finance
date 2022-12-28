@@ -33,7 +33,6 @@ class ServiceCycle extends AbstractService
      * @param  mixed $BankAccount
      * @return void
      */
-
     public function addCycle($form , BankAccount $BankAccount): void
     {
         $cycle = $form;
@@ -61,8 +60,5 @@ class ServiceCycle extends AbstractService
 
         return empty($BankAccountActive) ? false : true; 
     }
-
-
-
 
 }

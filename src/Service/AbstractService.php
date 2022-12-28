@@ -72,7 +72,6 @@ abstract class AbstractService
             'id' => $cycle,
         ]);
 
-
         return $cycle;
     }
 
