@@ -30,7 +30,7 @@ class HomeController extends AbstractController
     public function dashboard(ServiceDashboard $serviceDashboard ,Request $request , ServiceBankAccount $serviceBankAccount): Response
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), []);
-
+        
         $errors = [];
         $bankAccount = new BankAccount();
         

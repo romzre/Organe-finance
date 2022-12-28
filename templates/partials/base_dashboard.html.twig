@@ -99,39 +99,45 @@
 							</div>
 						</div>
 					</div>
-					{% if cycle is defined %}
+					{% if BankAccount is defined %}
+						{% if BankAccount is not empty %}
+							{% if cycle is defined and cycle is not empty %}
 
-						<div class="row mt-3 ">
-							<div class="d-flex justify-content-center p-2 ">
-								<div class="fs-5 ">Options</div>
-							</div>
-						</div>
-						<div class="p-2 d-flex flex-column justify-content-center align-items-center ">
-							<div class="row no-gutters">
-								<div class="bg-primary bg-gradient text-center p-2">
-									<a class="" href="{{ path("app_transaction_index" , { "CycleId" : cycle.id }) }}">
-										Transaction
-									</a>
+								<div class="row mt-3 ">
+									<div class="d-flex justify-content-center p-2 ">
+										<div class="fs-5 ">Gestion</div>
+									</div>
 								</div>
-								<div class="bg-primary bg-gradient text-center p-2">
-									<a href="{{path("app_category_index" , {"CycleId": cycle.id})}}">
-										Categorie
-									</a>
+								<div class="p-2 d-flex flex-column justify-content-center align-items-center ">
+									<div class="row no-gutters">
+										<div class="bg-primary bg-gradient text-center p-2">
+											<a class="" href="{{ path("app_cycle_index" , { "BankAccountId" : BankAccount.id }) }}">
+												Pèriode
+											</a>
+										</div>
+										<div class="bg-primary bg-gradient text-center p-2">
+											<a class="" href="{{ path("app_transaction_index" , { "CycleId" : cycle.id }) }}">
+												Transaction
+											</a>
+										</div>
+										<div class="bg-primary bg-gradient text-center p-2">
+											<a href="{{path("app_category_index" , {"CycleId": cycle.id})}}">
+												Categorie
+											</a>
+										</div>
+										<div class="bg-primary bg-gradient text-center p-2">
+											<a href="">
+												Budget
+											</a>
+										</div>
+
+									</div>
 								</div>
-								<div class="bg-primary bg-gradient text-center p-2">
-									<a href="">
-										Budget
-									</a>
-								</div>
-							</div>
-						</div>
+							{% endif %}
+						{% endif %}
 					{% endif %}
 				</div>
-			</div>
-			<div class="Main "> {% block body %}{% endblock %}
-				</div>
-			</div>
+			</body>
 		</body>
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
-	</html>
+	</body>
+</html></body></html></div><div class="Main "> {% block body %}{% endblock %}</div></div></body><script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script></html></body></html>

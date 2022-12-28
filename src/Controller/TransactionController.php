@@ -20,8 +20,9 @@ class TransactionController extends AbstractController
     /**
      * @Route("/{CycleId}/transaction/new", name="app_transaction_new")
      */
-    public function add(Cycle $CycleId , ServiceTransaction $serviceTransaction, Request $request , ServiceCycle $serviceCycle): Response
+    public function add(ServiceDashboard $serviceDashboard ,Cycle $CycleId , ServiceTransaction $serviceTransaction, Request $request , ServiceCycle $serviceCycle): Response
     {
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['CycleId' => $CycleId]);
         $data = [];
 
         $transaction = new Transaction();
@@ -33,7 +34,6 @@ class TransactionController extends AbstractController
             if($form->isValid())
             {
                $serviceTransaction->add($form->getData(), $CycleId);
-               
             }
             else
             {
@@ -43,8 +43,9 @@ class TransactionController extends AbstractController
         }
 
         // BankAccount
-        $data["BankAccounts"] = $serviceTransaction->getAllBankAccountActive($this->getUser());
-        $data['cycle'] = $serviceTransaction->getCycle($CycleId);
+        $data['cycle'] = $BankAccountsAndCycleDashboard['Cycle'];
+        $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
         $data['form'] = $form->createView();
  
         return $this->render('transaction/add.html.twig', $data);
@@ -53,13 +54,15 @@ class TransactionController extends AbstractController
     /**
      * @Route("/{CycleId}/transaction", name="app_transaction_index")
      */
-    public function index(Cycle $CycleId , ServiceTransaction $serviceTransaction, Request $request , ServiceCycle $serviceCycle): Response
+    public function index(ServiceDashboard $serviceDashboard, Cycle $CycleId , ServiceTransaction $serviceTransaction, Request $request , ServiceCycle $serviceCycle): Response
     {
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['CycleId' => $CycleId]);
         $data = [];
         $transactions = $serviceTransaction->getTransactionsByCycle($CycleId);
         // BankAccount
-        $data["BankAccounts"] = $serviceTransaction->getAllBankAccountActive($this->getUser());
-        $data['cycle'] = $serviceTransaction->getCycle($CycleId);
+        $data['cycle'] = $BankAccountsAndCycleDashboard['Cycle'];
+        $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
         $data['transactions'] = $transactions;
         return $this->render('transaction/index.html.twig', $data);
     }

@@ -27,8 +27,6 @@
 		</div>
 		<div
 			class="row">
-
-
 			<!-- Modal -->
 			<div class="modal fade" id="AddBankAccountModal" tabindex="-1" aria-labelledby="AddBankAccountModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -48,7 +46,7 @@
 								{{ 
                         form_row(addBankAccountForm.name, {'label' : 'Nom du compte', 'attr': {
                     'placeholder': 'ex : Compte Personnel' }})
-																																						}}
+																																																						}}
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -59,7 +57,18 @@
 					</div>
 				</div>
 			</div>
-
+		</div>
+		<div class="row">
+			<div class="d-flex gap-4">
+				{% for BankAccount in BankAccounts %}
+					<div class="border shadow p-5">
+						<div class="row">
+							<h4>{{ BankAccount.name }}</h4>
+						</div>
+					
+					</div>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 </div>{% endblock %}

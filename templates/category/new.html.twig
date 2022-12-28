@@ -6,8 +6,17 @@
 {% block body %}
 	<div class="container">
 		<div class="row">
-			<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord
-				{{app.user.username|upper}}</h1>
+			<h1 class="text-primary border-bottom border-warning">Compte : {{BankAccount.name}} > Catégories</h1>
+		</div>
+				<div class="row">
+			<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id} )}}">{{BankAccount.name}}</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">Catégories</li>
+				</ol>
+			</nav>
 		</div>
 		<div class="row">
 			<h2>Catégorie</h2>
@@ -27,8 +36,8 @@
 																																																												}}
 				</div>
 				<div class="d-flex justify-content-between">
-					<a href="{{ path('app_category_index') }}">
-						<button class="btn btn-secondary">Annuler</button>
+					<a href="{{ path('app_category_index', {"CycleId" : cycle.id }) }}">
+						<button type="button" class="btn btn-secondary">Annuler</button>
 					</a>
 					<button type="submit" class="btn btn-primary">Enregistrer</button>
 				</div>
