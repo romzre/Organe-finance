@@ -45,6 +45,7 @@ class ServiceChart extends AbstractService
             }
         }
 
+        
 
         $chart = $this->chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
 
