@@ -14,14 +14,17 @@ class ServiceCycle extends AbstractService
     protected EntityManagerInterface $manager;
     protected CycleRepository $repository;
 
+
     public function __construct(
         EntityManagerInterface $manager ,
         CycleRepository $repository
     )
+
     {
         $this->repository =  $repository;
         $this->manager = $manager;
     }
+
     
     /**
      * addCycle
@@ -39,6 +42,7 @@ class ServiceCycle extends AbstractService
         $this->manager->persist($cycle);
         $this->manager->flush();
     }
+
     
     /**
      * checkIfCycleActiveExist
@@ -51,10 +55,10 @@ class ServiceCycle extends AbstractService
         $BankAccountActive = $this->manager->getRepository(Cycle::class)->findOneBy([
             'isActive' => 1,
             "BankAccount" => $BankAccount
+
         ]);
 
         return empty($BankAccountActive) ? false : true; 
     }
-
 
 }

@@ -60,6 +60,7 @@ abstract class AbstractService
             'isActive' => 1,
             'BankAccount' => $BankAccount
         ]);
+
     
 
         return $cycle;
@@ -74,6 +75,7 @@ abstract class AbstractService
         return $cycle;
     }
 
+
     public function getTransactionsByCycle(Cycle $cycle): array
     {
         return $this->getManager()->getRepository(Transaction::class)->findBy(
@@ -82,5 +84,6 @@ abstract class AbstractService
             ]
         );
     } 
+
 
 }
