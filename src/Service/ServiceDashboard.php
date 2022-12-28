@@ -9,11 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
 use App\Repository\TransactionRepository;
 
+
 class ServiceDashboard extends AbstractService
 {
     protected EntityManagerInterface $manager;
     private BankAccountRepository $BankAccountRepository;
     private CycleRepository $CycleRepository;
+
     private TransactionRepository $TransactionRepository;
 
     public function __construct(
@@ -27,6 +29,7 @@ class ServiceDashboard extends AbstractService
         $this->BankAccountRepository = $BankAccountRepository;
         $this->CycleRepository = $CycleRepository;
         $this->TransactionRepository = $TransactionRepository;
+
     }
 
     public function getActiveBankAccounts(User $user): array
@@ -59,6 +62,7 @@ class ServiceDashboard extends AbstractService
             $data['BankAccount'] = $BankAccount;
 
         }
+
         if(!empty($options['CycleId']))
         {
           

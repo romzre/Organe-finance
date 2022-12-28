@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 class CycleController extends AbstractController
@@ -25,6 +26,7 @@ class CycleController extends AbstractController
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['BankAccountId' => $BankAccountId]);
 
 
+
         $data = [];
         $cycle = new Cycle();
         $form = $this->createForm(CycleAddFormType::class, $cycle);
@@ -34,6 +36,7 @@ class CycleController extends AbstractController
                 if ($service->checkIfCycleActiveExist($BankAccountId)) {
                     $service->disabledCycles($BankAccountId);
                     $service->addCycle($form->getData(), $BankAccountId);
+
                     $ActiveCycle = $service->getActiveCycle($BankAccountId);
                     $data["cycle"] = $ActiveCycle;
                 } else {
@@ -94,6 +97,7 @@ class CycleController extends AbstractController
             }
         }
 
+
         $data["CycleAddForm"] = $form->createView();
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
@@ -114,5 +118,6 @@ class CycleController extends AbstractController
     {
         $service->enabledCycle($CycleId);
         return $this->redirectToRoute("app_cycle_index", ["BankAccountId" => $CycleId->getBankAccount()->getId()]);
+
     }
 }

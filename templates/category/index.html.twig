@@ -17,6 +17,7 @@
 					<li class="breadcrumb-item active" aria-current="page">Catégories</li>
 				</ol>
 			</nav>
+
 		</div>
 		<div class="row">
 			<h2>Toutes les catégories</h2>
@@ -46,13 +47,16 @@
 						<td>{{ category.Label }}</td>
 						<td class="">
 							<div class=""><input class="" type="color" value="{{ category.Color }}" disabled></div></td>
+
 						<td>
 							<a href="{{ path('app_category_show', {'id': category.id}) }}">
 								<span class="material-icons  bg-info p-1 text-light rounded">
 									visibility
 								</span>
 							</a>
+
 							<a href="{{ path('app_category_edit', {'id': category.id , "CycleId" : cycle.id }) }}">
+
 								<span class="material-icons  bg-secondary p-1 text-light rounded">edit</span>
 							</a>
 						</td>

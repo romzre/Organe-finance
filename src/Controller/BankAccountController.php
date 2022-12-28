@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+
 use App\Entity\BankAccount;
+
 use App\Service\ServiceBankAccount;
 use App\Service\ServiceDashboard;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,13 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 
-
-
 class BankAccountController extends AbstractController
 {
     /**
      * @Route("/bank/account/{BankAccountId}", name="app_bank_account")
      */
+
     public function index( ServiceDashboard $serviceDashboard ,BankAccount $BankAccountId, ServiceBankAccount $serviceBankAccount): Response
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['BankAccountId' => $BankAccountId] );
@@ -32,6 +33,7 @@ class BankAccountController extends AbstractController
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
         $data["cycle"] = $BankAccountsAndCycleDashboard['Cycle'];
         
+
         return $this->render('bank_account/index.html.twig', $data);
     }
 }

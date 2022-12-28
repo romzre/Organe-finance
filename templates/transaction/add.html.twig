@@ -6,6 +6,7 @@
 {% block body %}
 	<div class="container">
 		<div class="row">
+
 			<h1 class="text-primary border-bottom border-warning">Compte : {{BankAccount.name}} > Transactions</h1>
 		</div>
 		<div class="row">
@@ -17,6 +18,7 @@
 					<li class="breadcrumb-item active" aria-current="page">Transactions</li>
 				</ol>
 			</nav>
+
 		</div>
 		<div class="row">
 			<h2>Ajouter une transaction</h2>
@@ -43,12 +45,15 @@
 					{{ 
                         form_row(form.libelle, {'label' : 'Libellé', 'attr': {
                     'placeholder': 'ex : cadeaux de noêl' }})
+
 																																																																																}}
+
 				</div>
 				<div class="form-group">
 					{{ 
                         form_row(form.sum, {'label' : 'Somme', 'attr': {
                     'placeholder': 'ex : 330' }})
+
 																																																																																}}
 				</div>
 				<div class="form-group">
@@ -57,6 +62,7 @@
 				</div>
 				<input type="hidden" name="cycle" value="{{cycle.id}}">
 				
+
 				<div class="d-flex justify-content-between">
 					<a href="{{ path('app_transaction_index', { "CycleId" : cycle.id } ) }}" class="btn btn-secondary">Annuler</a>
 					<button type="submit" class="btn btn-primary">Enregistrer</button>

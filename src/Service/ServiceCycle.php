@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+
 use DateTime;
 use App\Entity\Cycle;
 use DateTimeImmutable;
@@ -24,6 +25,7 @@ class ServiceCycle extends AbstractService
         $this->repository =  $repository;
         $this->manager = $manager;
     }
+
     
     /**
      * addCycleCustom
@@ -74,6 +76,7 @@ class ServiceCycle extends AbstractService
         $BankAccountActive = $this->manager->getRepository(Cycle::class)->findBy([
             'isActive' => 1,
             "BankAccount" => $BankAccount
+
         ]);
 
         return empty($BankAccountActive) ? false : true; 
@@ -98,6 +101,7 @@ class ServiceCycle extends AbstractService
         $cycle->setIsActive(1);
         $this->manager->flush();
     }
+
 
 
 }

@@ -37,6 +37,7 @@
 					<img class="rounded mx-auto d-block" src="{{ asset('build/img/no-session.jpg') }}" alt="">
 				</div>
 			{% endif %}
+
 		{% endif %}
 		{% if cycle is defined %}
 			{% if cycle is not empty %}
@@ -67,11 +68,13 @@
 									{% if Out is not empty %}
 										{{ Out }}
 									{% endif %}€</span>
+
 							</div>
 						</div>
 						<div class="card w-25 rounded-5 shadow">
 							<div class="p-2 fs-4 mx-3">Solde</div>
 							<div class="p-2 fs-2 d-flex justify-content-end">
+
 								<span class="d-block mx-3 text-info">
 									{% if Out is not empty %}
 										{% if Entry is defined and Entry is not empty %}
@@ -82,12 +85,12 @@
 									{% else %}
 										{{cycle.solde}}
 									{% endif %}€</span>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			{% endif %}
 		{% endif %}
-
 	</div>
 </div>{% endblock %}

@@ -22,11 +22,13 @@ class CategoryController extends AbstractController
      */
     public function index(Cycle $CycleId , ServiceDashboard $serviceDashboard , CategoryRepository $categoryRepository): Response
     {
+
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
       
         $data["categories"] = $categoryRepository->findBy(['User' => $this->getUser()]);
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
+
         $data["cycle"] = $CycleId;
         return $this->render('category/index.html.twig', $data);
     }
@@ -38,6 +40,7 @@ class CategoryController extends AbstractController
     {
         // dd($CycleId);
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
+
         $category = new Category();
         $category->setUser($this->getUser());
         $form = $this->createForm(CategoryType::class, $category);
@@ -52,6 +55,7 @@ class CategoryController extends AbstractController
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
         $data['category'] = $category;
         $data['cycle'] =  $BankAccountsAndCycleDashboard['Cycle'];
+
         $data['form'] = $form->createView();
         return $this->render('category/new.html.twig', $data);
     }
@@ -67,6 +71,7 @@ class CategoryController extends AbstractController
     }
 
     /**
+
      * @Route("/{CycleId}/{id}/edit", name="app_category_edit", methods={"GET", "POST"})
      */
     public function edit(ServiceDashboard $serviceDashboard ,Cycle $CycleId , Request $request, Category $category, CategoryRepository $categoryRepository): Response
@@ -79,6 +84,7 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
 
+
             return $this->redirectToRoute('app_category_index', ["CycleId" => $BankAccountsAndCycleDashboard['Cycle']->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -90,6 +96,7 @@ class CategoryController extends AbstractController
         $data["category"] = $category;
 
         return $this->renderForm('category/edit.html.twig', $data);
+
     }
 
     /**

@@ -6,6 +6,7 @@
 {% block body %}
 	<div class="container">
 		<div class="row">
+
 			<h1 class="text-primary border-bottom border-warning">Compte : {{BankAccount.name}} > Transaction</h1>
 		</div>
 		<div class="row">
@@ -45,18 +46,23 @@
 					{{ 
                         form_row(CycleAddForm.dateBegin, {'label' : 'Date de début', 'attr': {
                     'placeholder': 'ex : 1 janvier 2023' }})
+
 																																																																																											}}
+
 				</div>
 				<div class="form-group">
 					{{ 
                         form_row(CycleAddForm.dateEnd, {'label' : 'Date de fin', 'attr': {
                     'placeholder': 'ex : 31 janvier 2023' }})
+
 																																																																																											}}
+
 				</div>
 				<div class="form-group">
 					{{ 
                         form_row(CycleAddForm.solde, {'label' : 'Solde du compte', 'attr': {
                     'placeholder': 'ex : 330' }})
+
 																																																																																											}}
 				</div>
 				<div class="d-flex justify-content-between">
@@ -64,6 +70,7 @@
 					<button type="submit" class="btn btn-primary">Enregistrer</button>
 					{{form_end(CycleAddForm)}}
 				</div>
+
 			</div>
 		</div>
 	</div>
