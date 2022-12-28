@@ -43,9 +43,9 @@
 			{% if cycle is not empty %}
 				<div class="row">
 					<h2>Pèriode du:
-						{{ cycle.dateBegin|format_datetime('full', 'full', locale='fr') }}
+						{{ cycle.dateBegin|format_datetime('full', 'none', locale='fr') }}
 						au
-						{{ cycle.dateEnd|date("d - M - y") }}
+						{{ cycle.dateEnd|format_datetime('full', 'none', locale='fr') }}
 					</h2>
 				</div>
 				<div class="row ">
