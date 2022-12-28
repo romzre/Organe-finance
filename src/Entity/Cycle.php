@@ -146,7 +146,6 @@ class Cycle
         return $this;
     }
 
-
     /**
      * @return Collection<int, Transaction>
      */

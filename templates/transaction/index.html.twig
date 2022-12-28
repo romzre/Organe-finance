@@ -6,8 +6,19 @@
 {% block body %}
 <div class="container">
 	<div class="row">
-		<h1 class="border-bottom border-warning">Bienvenue sur votre tableau de bord
-			{{app.user.username|upper}}</h1>
+
+		<h1 class="text-primary text-primary border-bottom border-warning">Compte : {{BankAccount.name}} > Transaction</h1>
+	</div>
+	<div class="row">
+		<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id}  )}}">{{BankAccount.name}}</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Transactions</li>
+			</ol>
+		</nav>
+
 	</div>
 	<div class="row">
 		<h2>Toutes les transactions</h2>

@@ -46,7 +46,8 @@ abstract class AbstractService
      * @param  mixed $id
      * @return BankAccount
      */
-    public function getAccount(string $id) : BankAccount
+    public function getAccount(BankAccount $id) : BankAccount
+
     {
         $account = $this->getManager()->getRepository(BankAccount::class)->findOneBy(['id' => $id]);
 
@@ -81,9 +82,13 @@ abstract class AbstractService
         return $this->getManager()->getRepository(Transaction::class)->findBy(
             [
                 'Cycle' => $cycle
+
+            ],
+            [
+                "dateTransaction" => "ASC"
+
             ]
         );
     } 
-
 
 }

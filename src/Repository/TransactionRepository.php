@@ -39,6 +39,31 @@ class TransactionRepository extends ServiceEntityRepository
         }
     }
 
+    public function getSumTotalInflow($Cycle)
+    {
+        return $this->createQueryBuilder("t")
+                    ->select("SUM(t.sum) as SumEntry ")
+                    ->join("t.TypeTransaction" , "Type")
+                    ->where("t.Cycle = :cycle")
+                    ->andWhere("Type.Label = 'Entrer'")
+                    ->setParameter("cycle" , $Cycle)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    public function getSumTotalOutflow($Cycle)
+    {
+        return $this->createQueryBuilder("t")
+                    ->select("SUM(t.sum) as SumEntry ")
+                    ->join("t.TypeTransaction" , "Type")
+                    ->where("t.Cycle = :cycle")
+                    ->andWhere("Type.Label = 'Sortie'")
+                    ->setParameter("cycle" , $Cycle)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+
 //    /**
 //     * @return Transaction[] Returns an array of Transaction objects
 //     */

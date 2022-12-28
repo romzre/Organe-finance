@@ -7,6 +7,8 @@ use App\Entity\BankAccount;
 use App\Repository\CycleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
+use App\Repository\TransactionRepository;
+
 
 class ServiceDashboard extends AbstractService
 {
@@ -14,11 +16,20 @@ class ServiceDashboard extends AbstractService
     private BankAccountRepository $BankAccountRepository;
     private CycleRepository $CycleRepository;
 
-    public function __construct(BankAccountRepository $BankAccountRepository, CycleRepository $CycleRepository , EntityManagerInterface $manager)
+    private TransactionRepository $TransactionRepository;
+
+    public function __construct(
+        BankAccountRepository $BankAccountRepository, 
+         CycleRepository $CycleRepository , 
+         EntityManagerInterface $manager,
+         TransactionRepository $TransactionRepository
+         )
     {
         $this->manager = $manager;
         $this->BankAccountRepository = $BankAccountRepository;
         $this->CycleRepository = $CycleRepository;
+        $this->TransactionRepository = $TransactionRepository;
+
     }
 
     public function getActiveBankAccounts(User $user): array
@@ -51,7 +62,34 @@ class ServiceDashboard extends AbstractService
             $data['BankAccount'] = $BankAccount;
 
         }
+
+        if(!empty($options['CycleId']))
+        {
+          
+            $Cycle = $options['CycleId'];
+            $BankAccount = $Cycle->getBankAccount();
+            $cycle = $this->getActiveCycle($BankAccount);
+            $data['BankAccount'] = $BankAccount;
+            $data['Cycle'] = $cycle;
+            
+        }
         return $data;
+    }
+
+    public function getSumEntries($BankAccount)
+    {
+        $Cycle = $this->getActiveCycle($BankAccount);
+        $results = $this->TransactionRepository->getSumTotalInflow($Cycle);
+        
+        return implode("" , $results[0]);
+    }
+
+    public function getSumOuties($BankAccount)
+    {
+        $Cycle = $this->getActiveCycle($BankAccount);
+        $results = $this->TransactionRepository->getSumTotalOutflow($Cycle);
+        
+        return implode("" , $results[0]);
     }
 
 }

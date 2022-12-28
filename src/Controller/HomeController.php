@@ -31,6 +31,8 @@ class HomeController extends AbstractController
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), []);
 
+        
+
         $errors = [];
         $bankAccount = new BankAccount();
         

@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Cycle;
 use App\Entity\Category;
 use App\Form\CategoryType;
-
 use App\Service\ServiceDashboard;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,19 +22,25 @@ class CategoryController extends AbstractController
      */
     public function index(Cycle $CycleId , ServiceDashboard $serviceDashboard , CategoryRepository $categoryRepository): Response
     {
-        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), []);
+
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
+      
         $data["categories"] = $categoryRepository->findBy(['User' => $this->getUser()]);
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
+
         $data["cycle"] = $CycleId;
         return $this->render('category/index.html.twig', $data);
     }
 
     /**
-     * @Route("/new", name="app_category_new", methods={"GET", "POST"})
+     * @Route("/{CycleId}/new", name="app_category_new", methods={"GET", "POST"})
      */
-    public function new(ServiceDashboard $serviceDashboard , Request $request, CategoryRepository $categoryRepository): Response
+    public function new(Cycle $CycleId , ServiceDashboard $serviceDashboard , Request $request, CategoryRepository $categoryRepository): Response
     {
-        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), []);
+        // dd($CycleId);
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
+
         $category = new Category();
         $category->setUser($this->getUser());
         $form = $this->createForm(CategoryType::class, $category);
@@ -43,11 +48,14 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
-            return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_category_index', ["CycleId" => $BankAccountsAndCycleDashboard['Cycle']->getId()], Response::HTTP_SEE_OTHER);
         }
 
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
         $data['category'] = $category;
+        $data['cycle'] =  $BankAccountsAndCycleDashboard['Cycle'];
+
         $data['form'] = $form->createView();
         return $this->render('category/new.html.twig', $data);
     }
@@ -63,23 +71,32 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_category_edit", methods={"GET", "POST"})
+
+     * @Route("/{CycleId}/{id}/edit", name="app_category_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function edit(ServiceDashboard $serviceDashboard ,Cycle $CycleId , Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->add($category, true);
 
-            return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('app_category_index', ["CycleId" => $BankAccountsAndCycleDashboard['Cycle']->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('category/edit.html.twig', [
-            'category' => $category,
-            'form' => $form,
-        ]);
+        $data["categories"] = $categoryRepository->findBy(['User' => $this->getUser()]);
+        $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
+        $data["cycle"] = $CycleId;
+        $data["form"] = $form;
+        $data["category"] = $category;
+
+        return $this->renderForm('category/edit.html.twig', $data);
+
     }
 
     /**
