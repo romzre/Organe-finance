@@ -43,7 +43,7 @@
 			{% if cycle is not empty %}
 				<div class="row">
 					<h2>Pèriode du:
-						{{ cycle.dateBegin|date("d - M - y") }}
+						{{ cycle.dateBegin|format_datetime('full', 'full', locale='fr') }}
 						au
 						{{ cycle.dateEnd|date("d - M - y") }}
 					</h2>
@@ -95,7 +95,7 @@
 		<div class="row p-4 ">
 		
 			<div class="w-25 border p-4 shadow">
-				<h4>{{chart.options.title.text}}</h4>
+				<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
 				{{ render_chart(chart) }}
 			</div>
 		</div>

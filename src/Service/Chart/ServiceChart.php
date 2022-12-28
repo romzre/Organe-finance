@@ -31,11 +31,20 @@ class ServiceChart extends AbstractService
         $transactionsSum = [];
         foreach ($transactions as $transaction) {
             if ($transaction->getTypeTransaction()->getLabel() === "Sortie") {
-                $categories[] = $transaction->getCategory()->getLabel();
-                $colors[] = $transaction->getCategory()->getColor();
-                $transactionsSum[] = $transaction->getSum();
+                $key = array_search($transaction->getCategory()->getLabel() , $categories);
+                if(!empty($key))
+                {
+                    $transactionsSum[$key] += $transaction->getSum();
+                }
+                else
+                {
+                    $categories[] = $transaction->getCategory()->getLabel();
+                    $transactionsSum[] = $transaction->getSum();
+                    $colors[] = $transaction->getCategory()->getColor();
+                }
             }
         }
+
 
         $chart = $this->chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
 
