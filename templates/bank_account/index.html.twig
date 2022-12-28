@@ -92,5 +92,12 @@
 				</div>
 			{% endif %}
 		{% endif %}
+		<div class="row p-4 ">
+		
+			<div class="w-25 border p-4 shadow">
+				<h4>{{chart.options.title.text}}</h4>
+				{{ render_chart(chart) }}
+			</div>
+		</div>
 	</div>
 </div>{% endblock %}
