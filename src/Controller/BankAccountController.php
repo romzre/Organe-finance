@@ -30,6 +30,7 @@ class BankAccountController extends AbstractController
     {
         $data = [];
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['BankAccountId' => $BankAccountId] );
+
         if(!empty($BankAccountsAndCycleDashboard['Cycle']))
         {
             $chart = $serviceChart->index($BankAccountsAndCycleDashboard['Cycle']);
@@ -38,6 +39,7 @@ class BankAccountController extends AbstractController
         $Entry = $serviceDashboard->getSumEntries($BankAccountId);
         $Out = $serviceDashboard->getSumOuties($BankAccountId);
     
+
         $data['Entry'] = $Entry;
         $data['Out'] = $Out;
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];

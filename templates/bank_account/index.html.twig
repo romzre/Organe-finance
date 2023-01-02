@@ -105,12 +105,14 @@
 			{% endif %}
 		{% endif %}
 		<div class="row p-4 ">
+
 			{% if chart is defined and chart is not empty %}
 				<div class="w-25 border p-4 shadow">
 					<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
 					{{ render_chart(chart) }}
 				</div>
 			{% endif %}
+
 		</div>
 	</div>
 </div>{% endblock %}
