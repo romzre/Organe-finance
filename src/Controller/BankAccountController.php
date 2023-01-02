@@ -28,20 +28,22 @@ class BankAccountController extends AbstractController
         ServiceChart $serviceChart
         ): Response
     {
+        $data = [];
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['BankAccountId' => $BankAccountId] );
-        $chart = $serviceChart->index($BankAccountsAndCycleDashboard['Cycle']);
+        if(!empty($BankAccountsAndCycleDashboard['Cycle']))
+        {
+            $chart = $serviceChart->index($BankAccountsAndCycleDashboard['Cycle']);
+            $data['chart'] = $chart;
+        }
         $Entry = $serviceDashboard->getSumEntries($BankAccountId);
         $Out = $serviceDashboard->getSumOuties($BankAccountId);
     
-        $data = [];
-        $data['chart'] = $chart;
         $data['Entry'] = $Entry;
         $data['Out'] = $Out;
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
         $data["cycle"] = $BankAccountsAndCycleDashboard['Cycle'];
         
-
         return $this->render('bank_account/index.html.twig', $data);
     }
 }

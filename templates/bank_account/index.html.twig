@@ -50,6 +50,16 @@
 				</div>
 				<div class="row ">
 					<div class="d-flex gap-4 my-4">
+						<div class="card w-25 rounded-5 shadow">
+							<div class="p-2 fs-4 mx-3">Solde de départ</div>
+							<div class="p-2 fs-2 d-flex justify-content-end">
+
+								<span class="d-block mx-3 text-muted">
+									{{cycle.solde}}
+									€</span>
+
+							</div>
+						</div>
 						<div class="card w-25 rounded-5 shadow bg-gray-700">
 							<div class="p-2 fs-4  mx-3">Entrer</div>
 							<div class="p-2 fs-2 d-flex justify-content-end">
@@ -67,25 +77,27 @@
 								<span class="d-block mx-3 text-danger">
 									{% if Out is not empty %}
 										{{ Out }}
+									{% else %}
+										0
 									{% endif %}€</span>
 
 							</div>
 						</div>
 						<div class="card w-25 rounded-5 shadow">
-							<div class="p-2 fs-4 mx-3">Solde</div>
+							<div class="p-2 fs-4 mx-3">Solde actuel</div>
 							<div class="p-2 fs-2 d-flex justify-content-end">
-
 								<span class="d-block mx-3 text-info">
-									{% if Out is not empty %}
-										{% if Entry is defined and Entry is not empty %}
-											{{ Entry - Out }}
-										{% else %}
-											{{ cycle.solde - Out }}
-										{% endif %}
+									{% if Entry is defined and Entry is not empty and Out is defined and Out is not empty %}
+										{{ cycle.solde + Entry - Out  }}
+									{% elseif Entry is defined and Entry is not empty %}
+										{{ cycle.solde + Entry }}
+									{% elseif Out is defined and Out is not empty %}
+										{{ cycle.solde - Out }}
 									{% else %}
 										{{cycle.solde}}
-									{% endif %}€</span>
-
+									{% endif %}
+									€
+								</span>
 							</div>
 						</div>
 					</div>
@@ -93,11 +105,12 @@
 			{% endif %}
 		{% endif %}
 		<div class="row p-4 ">
-		
-			<div class="w-25 border p-4 shadow">
-				<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
-				{{ render_chart(chart) }}
-			</div>
+			{% if chart is defined and chart is not empty %}
+				<div class="w-25 border p-4 shadow">
+					<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
+					{{ render_chart(chart) }}
+				</div>
+			{% endif %}
 		</div>
 	</div>
 </div>{% endblock %}
