@@ -50,7 +50,8 @@
 						<tr>
 							<td>{{ cycle.dateBegin|date("d - m - y") }}</td>
 					</td>
-					<td>{{cycle.dateEnd|date("d - m - y")}}</td>
+					<td>{% if cycle.dateEnd is not empty %}{{cycle.dateEnd|date("d - m - y")}}{% else %}
+						<span class="badge bg-info">En cours</span>{% endif %}</td>
 					<td>{{cycle.solde}}€</td>
 					<td>
 						{% if cycle.isActive %}

@@ -36,7 +36,7 @@
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							{% if errors is not empty %}
+							{% if errors is defined and errors is not empty %}
 								{% for error in erros %}
 									<span class="error">{{ error.message }}</span>
 								{% endfor %}
@@ -45,10 +45,12 @@
 							<div class="form-group">
 								{{ 
                         form_row(addBankAccountForm.name, {'label' : 'Nom du compte', 'attr': {
-                    'placeholder': 'ex : Compte Personnel' }})
-
-																																																						}}
-
+                    'placeholder': 'ex : Compte Personnel' }})		}}
+							</div>
+								<div class="form-group">
+								{{ 
+                        form_row(addBankAccountForm.solde, {'label' : 'Solde de départ', 'attr': {
+                    'placeholder': 'ex : 330' }})		}}
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -65,9 +67,11 @@
 				{% for BankAccount in BankAccounts %}
 					<div class="border shadow p-5">
 						<div class="row">
-							<h4>{{ BankAccount.name }}</h4>
+							<a href="{{ path("app_bank_account" , { 'BankAccountId': BankAccount.id }) }}">
+								<h4>{{ BankAccount.name }}</h4>
+							</a>
 						</div>
-					
+
 					</div>
 				{% endfor %}
 			</div>

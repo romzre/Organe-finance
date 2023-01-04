@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\BankAccount;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,6 +14,11 @@ class AddBankAccountFormType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('solde' , NumberType::class , [
+                "mapped" => false,
+                "required" => true,
+
+            ] )
         ;
     }
 

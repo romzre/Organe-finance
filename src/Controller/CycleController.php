@@ -24,9 +24,6 @@ class CycleController extends AbstractController
     public function add(ServiceDashboard $serviceDashboard, BankAccount $BankAccountId, ServiceCycle $service,  Request $request): Response
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['BankAccountId' => $BankAccountId]);
-
-
-
         $data = [];
         $cycle = new Cycle();
         $form = $this->createForm(CycleAddFormType::class, $cycle);

@@ -54,17 +54,14 @@ abstract class AbstractService
         return $account;
     }
 
-    public function getActiveCycle($BankAccount)
+    public function getActiveCycle($BankAccount): Cycle
     {
       
         $cycle = $this->manager->getRepository(cycle::class)->findOneBy([
             'isActive' => 1,
             'BankAccount' => $BankAccount
         ]);
-
-    
-
-        return $cycle;
+        return !empty($cycle) ? $cycle : new Cycle();
     }
 
     public function getCycle(Cycle $cycle)
