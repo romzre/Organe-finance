@@ -61,6 +61,7 @@ abstract class AbstractService
             'isActive' => 1,
             'BankAccount' => $BankAccount
         ]);
+        
         return !empty($cycle) ? $cycle : new Cycle();
     }
 
