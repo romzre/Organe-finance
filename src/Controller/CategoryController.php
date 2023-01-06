@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
      */
     public function index(Cycle $CycleId , ServiceDashboard $serviceDashboard , CategoryRepository $categoryRepository): Response
     {
-
+      
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
       
         $data["categories"] = $categoryRepository->findBy(['User' => $this->getUser()]);

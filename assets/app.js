@@ -13,6 +13,8 @@ import './styles/nav.scss';
 import './styles/layout_dashboard.scss';
 
 
-require('./scripts/modal');
+import './scripts/Api/FilterTransaction.js';
+import './scripts/Controller/Transaction/FilterTransactionController.js';
+
 
 // start the Stimulus application

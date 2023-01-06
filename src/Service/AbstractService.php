@@ -8,7 +8,7 @@ use App\Entity\BankAccount;
 use App\Entity\Transaction;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
-
+use DateTime;
 
 abstract class AbstractService 
 {
@@ -74,19 +74,32 @@ abstract class AbstractService
         return $cycle;
     }
 
-
-    public function getTransactionsByCycle(Cycle $cycle): array
+    public function getTransactionsByCurrentCycle(Cycle $cycle): array
     {
-        return $this->getManager()->getRepository(Transaction::class)->findBy(
-            [
-                'Cycle' => $cycle
+        $currentMonth = $this->getCurrentMonth();
 
-            ],
-            [
-                "dateTransaction" => "ASC"
-
-            ]
-        );
+        return $this->getManager()->getRepository(Transaction::class)
+        ->createQueryBuilder('t')
+        ->select('t')
+        ->where('t.dateTransaction > :dateBeginMonth')
+        ->setParameter('dateBeginMonth', $currentMonth["dateStartMonth"])
+        ->andWhere('t.dateTransaction < :dateEndMonth')
+        ->setParameter('dateEndMonth', $currentMonth["dateEndMonth"])
+        ->getQuery()
+        ->getResult();
+       
     } 
+
+    public function getCurrentMonth(): array
+    {
+        $date = new DateTime();
+        $nbDayInCurrentMonth = date('t');
+        $dateStartMonth = $date->format("Y-m-01 00:00:00");
+        $dateEndMonth = $date->format("Y-m-{$nbDayInCurrentMonth} 00:00:00");
+        return [
+            "dateStartMonth" => $dateStartMonth,
+            "dateEndMonth" => $dateEndMonth
+        ];
+    }
 
 }

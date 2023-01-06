@@ -63,13 +63,15 @@ class TransactionController extends AbstractController
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['CycleId' => $CycleId]);
         $data = [];
-        $transactions = $serviceTransaction->getTransactionsByCycle($CycleId);
+        $transactions = $serviceTransaction->getTransactionsByCurrentCycle($CycleId);
         // BankAccount
         $data['cycle'] = $BankAccountsAndCycleDashboard['Cycle'];
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
 
         $data['transactions'] = $transactions;
+        $data['dates'] = $serviceTransaction->getCurrentMonth();
+
         return $this->render('transaction/index.html.twig', $data);
     }
 
