@@ -102,4 +102,26 @@ abstract class AbstractService
         ];
     }
 
+    public function getPeriod(string $start , string $end): array
+    {
+        
+        return ["start" => (new DateTime($start))->format("Y-m-d 00:00:00"), 'end' => (new DateTime($end))->format("Y-m-d 00:00:00")];
+    }
+
+    public function getTransactionsByCustomCycle(array $dates): array
+    {
+
+        return $this->getManager()->getRepository(Transaction::class)
+        ->createQueryBuilder('t')
+        ->select('t' )
+        ->innerJoin('App\Entity\WayTransaction' , "WayTransaction" , "WITH" , "WayTransaction.id = t.WayTransaction")
+        ->where('t.dateTransaction > :dateBeginMonth')
+        ->setParameter('dateBeginMonth', $dates["start"])
+        ->andWhere('t.dateTransaction < :dateEndMonth')
+        ->setParameter('dateEndMonth', $dates["end"])
+        ->getQuery()
+        ->getResult();
+       
+    } 
+
 }

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api\Transaction;
 
-
+use App\Service\ServiceTransaction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,11 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiTransactionFilterController extends AbstractController
 {
     /**
-     * @Route("/filter/transaction/{filter}", name="app_api_transaction_filter")
+     * @Route("/api/transaction/date", name="api_transaction_date" )
      */
-    public function filter(SerializerInterface $serializer , string $filter): Response
+    public function filter(SerializerInterface $serializer , Request $request, ServiceTransaction $serviceTransaction): Response
     {
-
         if(!$this->getUser())
         {
             http_response_code(405);
@@ -28,10 +27,14 @@ class ApiTransactionFilterController extends AbstractController
         }
         else
         {
-            
-            return new Response($serializer->serialize([$this->getUser()->getId() => "test"],  'json') , 200);
+            $start = $request->get("Start");
+            $end  = $request->get("End");
+            $dates = $serviceTransaction->getPeriod($start , $end);
+
+            $transactions = $serviceTransaction->getTransactionsByCustomCycle($dates);
+           
+
+            return new Response($serializer->serialize($transactions,  'json' , ['groups' => ['transaction_index']]) , 200);
         }
-
     }
-
 }
