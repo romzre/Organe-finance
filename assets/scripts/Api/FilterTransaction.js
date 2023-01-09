@@ -103,7 +103,30 @@ function insertDate(Date)
 {
     const td = document.createElement("td")
     const dateFormat = String(Date.replace('T00:00:00+00:00',''));
-    td.innerHTML = dateFormat
+    const tabDataDate = dateFormat.split("-")
+    td.innerHTML = tabDataDate[2]+"-"+tabDataDate[1]+"-"+tabDataDate[0].slice(-2)
+    return td
+}
+
+function insertActions(objet)
+{
+    const td = document.createElement("td")
+    const aEdit = document.createElement("a")
+    const aDelete = document.createElement("a")
+    const spanEdit = document.createElement("span")
+    const spanDelete = document.createElement("span")
+    aEdit.setAttribute("href" , "/transaction/edit/"+objet.id)
+    aDelete.setAttribute("href" , "/transaction/delete/"+objet.id)
+    spanEdit.setAttribute('class', "material-icons bg-secondary p-1 text-light rounded")
+    spanDelete.setAttribute('class', "material-icons bg-warning p-1 text-light rounded")
+    
+    spanEdit.innerText = "edit"
+    spanDelete.innerText = "delete"
+    aEdit.appendChild(spanEdit)
+    aDelete.appendChild(spanDelete)
+    td.appendChild(aEdit)
+    td.appendChild(aDelete)
+    
     return td
 }
 
@@ -126,13 +149,14 @@ function insertDataRow(objet)
      let cat = insertCat(objet.Category)
      let Way = insertWay(objet.WayTransaction.Label)
      let Date = insertDate(objet.dateTransaction)
+     let Actions = insertActions(objet)
     tr.appendChild(type)
     tr.appendChild(Sum)
     tr.appendChild(libelle)
     tr.appendChild(cat)
     tr.appendChild(Way)
     tr.appendChild(Date)
-    // insertActions()
+    tr.appendChild(Actions)
     return tr
 }
 

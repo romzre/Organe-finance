@@ -15,6 +15,7 @@ class Transaction
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("transaction_index")
      */
     private $id;
 
