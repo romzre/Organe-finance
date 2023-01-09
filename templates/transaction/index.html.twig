@@ -23,7 +23,7 @@
 
 	</div>
 	<div class="row">
-		<h2>Du
+		<h2 id="dateCycle">Du
 			{{ dates.dateStartMonth|format_datetime('full', 'none', locale='fr')}}
 			au
 			{{ dates.dateEndMonth|format_datetime('full', 'none', locale='fr')}}
@@ -124,15 +124,18 @@
 				</thead>
 				<tbody>
 					{% for transaction in transactions %}
-						<tr>
+						<tr class="rowData">
 							<td>
 								{% if transaction.TypeTransaction.Label == "Entrer" %}
 									<span class="material-icons text-light" style="background: green">arrow_forward</span>
 								{% endif %}
 								{% if transaction.TypeTransaction.Label == "Sortie" %}
 									<span class="material-icons text-light" style="background: red">arrow_back</span>
+									
 								{% endif %}
-								{{transaction.TypeTransaction.Label}}</td>
+								{{transaction.TypeTransaction.Label}}
+								<img src="" alt="">
+								</td>
 
 							<td class=" text-start">{{transaction.sum}}€</td>
 							<td>{{transaction.libelle}}</td>
@@ -163,9 +166,6 @@
 								{% endif %}
 							</td>
 						</tr>
-					</tbody>
-				</tbody>
-			</tr>
 		{% endfor %}
 	</tbody>
 </table>{% endif %}</div></div></div></div>{% endblock %}
