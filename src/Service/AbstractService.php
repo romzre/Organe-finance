@@ -9,6 +9,7 @@ use App\Entity\Transaction;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\BankAccountRepository;
 use DateTime;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 abstract class AbstractService 
 {
@@ -74,20 +75,35 @@ abstract class AbstractService
         return $cycle;
     }
 
-    public function getTransactionsByCurrentCycle(Cycle $cycle): array
+    public function getTransactionsByCurrentCycle(Cycle $cycle, $options = [] ): array
     {
+        $result = [];
         $currentMonth = $this->getCurrentMonth();
 
-        return $this->getManager()->getRepository(Transaction::class)
+        $limit = !empty($options['limit']) ? $options['limit'] : 5;
+        $page = $options['page'];
+
+        $query = $this->getManager()->getRepository(Transaction::class)
         ->createQueryBuilder('t')
         ->select('t')
         ->where('t.dateTransaction > :dateBeginMonth')
         ->setParameter('dateBeginMonth', $currentMonth["dateStartMonth"])
         ->andWhere('t.dateTransaction < :dateEndMonth')
         ->setParameter('dateEndMonth', $currentMonth["dateEndMonth"])
-        ->getQuery()
-        ->getResult();
+        ->orderBy('t.dateTransaction', 'DESC')
+        ->setMaxResults($limit)
+        ->setFirstResult($page * $limit -$limit);
        
+        $paginator = new Paginator($query);
+        $transactions = $paginator->getQuery()->getResult();
+        $pages = ceil($paginator->count() / $limit);
+
+        $result["transactions"] = $transactions;
+        $result["pages"] = $pages;
+        $result["page"] = $page;
+        $result["limit"] = $limit;
+
+        return $result;
     } 
 
     public function getCurrentMonth(): array

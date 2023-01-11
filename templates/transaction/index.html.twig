@@ -4,168 +4,198 @@
 {% endblock %}
 
 {% block body %}
-<div class="container p-4">
-	<div class="row">
-
-		<h1 class="text-primary text-primary border-bottom border-warning">Compte :
-			{{BankAccount.name}}
-			> Transaction</h1>
-	</div>
-	<div class="row">
-		<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item">
-					<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id} )}}">{{BankAccount.name}}</a>
-				</li>
-				<li class="breadcrumb-item active" aria-current="page">Transactions</li>
-			</ol>
-		</nav>
-
-	</div>
-	<div class="row">
-		<h2 id="dateCycle">Du
-			{{ dates.dateStartMonth|format_datetime('full', 'none', locale='fr')}}
-			au
-			{{ dates.dateEndMonth|format_datetime('full', 'none', locale='fr')}}
-		</h2>
-	</div>
-	<div class="row">
-		<div class="d-flex justify-content-end p-2">
-			{% if cycle.dateEnd is  empty %}
-				<a href="{{ path("app_transaction_new" , {"CycleId":cycle.id }) }}">
-					<button class="btn btn-primary gap-1 d-flex justify-content-center align-items-center">
-						Ajouter une transaction<span class="material-icons">
-							add_circle
-						</span>
-					</button>
-				</a>
-			{% endif %}
+	<div class="container px-5">
+		<div class="row">
+			<h1 class="text-primary text-primary border-bottom border-warning">Compte :
+				{{BankAccount.name}}
+				> Transaction</h1>
 		</div>
-		<div class="row ">
-			<div class="d-flex gap-2 align-items-center">
-				<div class="col-sm-3 shadow d-flex gap-2 justify-content-start align-items-center  p-2">
-					<input id="Start" class="form-control" type="date" name="dateStart">
-					<input id="End" class="form-control" type="date" name="dateEnd">
-				</div>
-				<div>
-					<button id="btnDateFilter" class="btn btn-info ">Filtrer</button>
+		<div class="row">
+			<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id} )}}">{{BankAccount.name}}</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">Transactions</li>
+				</ol>
+			</nav>
+
+		</div>
+		<div class="row">
+			<div class="d-flex gap-4">
+				<h2 id="dateCycle" class="fs-4">Du
+					{{ dates.dateStartMonth|format_datetime('full', 'none', locale='fr')}}
+
+					au
+					{{ dates.dateEndMonth|format_datetime('full', 'none', locale='fr')}}
+				</h2>
+				<div class=" w-25 rounded-5 shadow">
+					<div class="p-2 fs-5 mx-3 d-flex">Solde actuel :
+						<span class="d-block mx-3 text-info">
+							{% if Entry is defined and Entry is not empty and Out is defined and Out is not empty %}
+								{{ cycle.solde + Entry - Out  }}
+							{% elseif Entry is defined and Entry is not empty %}
+								{{ cycle.solde + Entry }}
+							{% elseif Out is defined and Out is not empty %}
+								{{ cycle.solde - Out }}
+							{% else %}
+								{{cycle.solde}}
+							{% endif %}
+							€
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-2 d-flex justify-content-start align-items-center p-2">
-				<select class="form-select form-control" id="FHeadTable" aria-label="FilterByHeadTable">
-					<option value="noValue" selected>Filtrer</option>
-					<option value="0">Type</option>
-					<option value="1">Somme</option>
-					<option value="2">Libéllé</option>
-					<option value="3">Catégorie</option>
-					<option value="4">Moyen</option>
-				</select>
+
+			<div class="d-flex justify-content-end p-2">
+				{% if cycle.dateEnd is  empty %}
+					<a href="{{ path("app_transaction_new" , {"CycleId":cycle.id }) }}">
+						<button class="btn btn-primary gap-1 d-flex justify-content-center align-items-center">
+							Ajouter une transaction<span class="material-icons">
+								add_circle
+							</span>
+						</button>
+					</a>
+				{% endif %}
 
 			</div>
+			<div class="row ">
+				<div class="d-flex gap-2 shadow align-items-center flex-row">
+					<div class="col-sm-3  d-flex gap-2 justify-content-start align-items-center  py-2">
+						<input id="Start" class="form-control" type="date" name="dateStart" value="{{ dates.dateStartMonth|date("Y-m-d")}}">
+						<input id="End" class="form-control" type="date" name="dateEnd" value="{{ dates.dateEndMonth|date("Y-m-d")}}">
+					</div>
+					<div>
+						<button id="btnDateFilter" class="btn btn-info ">Filtrer</button>
+					</div>
+				
+				<div class="col-sm-3 d-flex justify-content-start align-items-center p-2">
+					<select class="form-select form-control" id="FHeadTable" aria-label="FilterByHeadTable">
+						<option value="noValue" selected>Grouper par</option>
+						<option value="0">Type</option>
+						<option value="1">Somme</option>
+						<option value="2">Libéllé</option>
+						<option value="3">Catégorie</option>
+						<option value="4">Moyen</option>
+					</select>
+				</div>
+			</div>
+			<div class="row p-2">
+				{% if transactions is not empty %}
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="headTable" scope="col">
+									<div class="d-flex align-items-center">
+										<span>Type</span>
+										<span class="material-icons d-none icon">
+											swap_vert
+										</span>
+									</div>
+								</th>
+								<th class="headTable" scope="col">
+									<div class="d-flex align-items-center">
+										<span>Somme</span>
+										<span class="material-icons d-none icon">
+											swap_vert
+										</span>
+									</div>
+								</th>
+								<th class="headTable" scope="col">
+									<div class="d-flex align-items-center">
+										<span>Libellé</span>
+										<span class="material-icons d-none icon">
+											swap_vert
+										</span>
+									</div>
+								</th>
+								<th class="headTable" scope="col">
+									<div class="d-flex align-items-center">
+										<span>Catégorie</span>
+										<span class="material-icons d-none icon">
+											swap_vert
+										</span>
+									</div>
+								</th>
+								<th class="headTable" scope="col">
+									<div class="d-flex align-items-center">
+										<span>Moyen</span>
+										<span class="material-icons d-none icon">
+											swap_vert
+										</span>
+									</div>
+								</th>
+								<th class="headTable" scope="col">
+									<div class="d-flex align-items-center">
+										<span>Date</span>
+										<span class="material-icons d-none icon">
+											swap_vert
+										</span>
+									</div>
+								</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for transaction in transactions %}
+								<tr class="rowData">
+									<td class="">
+										{% if transaction.TypeTransaction.Label == "Entrer" %}
+											<span class="material-icons text-light" style="background: green">arrow_forward</span>
+										{% endif %}
+										{% if transaction.TypeTransaction.Label == "Sortie" %}
+											<span class="material-icons text-light" style="background: red">arrow_back</span>
+
+										{% endif %}
+										{{transaction.TypeTransaction.Label}}
+
+									</td>
+
+									<td class=" text-start">{{transaction.sum}}€</td>
+									<td>{{transaction.libelle}}</td>
+									<td>
+										<span style="background:{{transaction.Category.Color}}" class="badge">{{transaction.Category.Label}}</span>
+									</td>
+									<td>{{transaction.WayTransaction.Label}}</td>
+									<td>{{transaction.dateTransaction|date("d-m-y")}}</td>
+									<td>
+										{% if cycle.dateEnd is  empty %}
+											<a href="{{ path("app_transaction_edit" , { "TransactionId" : transaction.id } ) }}">
+												<span class="material-icons bg-secondary p-1 text-light rounded">
+													edit
+												</span>
+											</a>
+											<a href="{{ path("app_transaction_delete" , { "TransactionId" : transaction.id } ) }}">
+												<span class="material-icons bg-warning p-1 text-light rounded">
+													delete
+												</span>
+											{% else %}
+												<span class="material-icons bg-dark p-1 text-light rounded">
+													edit
+												</span>
+												<span class="material-icons bg-dark p-1 text-light rounded">
+													delete
+												</span>
+											</a>
+										{% endif %}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endif %}
+				<div class="row">
+					{% set pages = pagination.pages  %}
+					{% set currentPage = pagination.page  %}
+					{% set Previous = currentPage - 1  %}
+					{% set Next = currentPage + 1  %}
+					{% set path = path("app_transaction_index" , { "CycleId" : cycle.id } )  %}
+					{% include "partials/_pagination.html.twig" %}
+				</div>
+			</div>
+
 		</div>
 	</div>
-	<div class="row p-2">
-		{% if transactions is not empty %}
-			<table class="table">
-				<thead>
-					<tr>
-						<th class="headTable" scope="col">
-							<div class="d-flex align-items-center">
-								<span>Type</span>
-								<span class="material-icons d-none icon">
-									swap_vert
-								</span>
-							</div>
-						</th>
-						<th class="headTable" scope="col">
-							<div class="d-flex align-items-center">
-								<span>Somme</span>
-								<span class="material-icons d-none icon">
-									swap_vert
-								</span>
-							</div>
-						</th>
-						<th class="headTable" scope="col">
-							<div class="d-flex align-items-center">
-								<span>Libellé</span>
-								<span class="material-icons d-none icon">
-									swap_vert
-								</span>
-							</div>
-						</th>
-						<th class="headTable" scope="col">
-							<div class="d-flex align-items-center">
-								<span>Catégorie</span>
-								<span class="material-icons d-none icon">
-									swap_vert
-								</span>
-							</div>
-						</th>
-						<th class="headTable" scope="col">
-							<div class="d-flex align-items-center">
-								<span>Moyen</span>
-								<span class="material-icons d-none icon">
-									swap_vert
-								</span>
-							</div>
-						</th>
-						<th class="headTable" scope="col">
-							<div class="d-flex align-items-center">
-								<span>Date</span>
-								<span class="material-icons d-none icon">
-									swap_vert
-								</span>
-							</div>
-						</th>
-						<th scope="col">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for transaction in transactions %}
-						<tr class="rowData">
-							<td>
-								{% if transaction.TypeTransaction.Label == "Entrer" %}
-									<span class="material-icons text-light" style="background: green">arrow_forward</span>
-								{% endif %}
-								{% if transaction.TypeTransaction.Label == "Sortie" %}
-									<span class="material-icons text-light" style="background: red">arrow_back</span>
-									
-								{% endif %}
-								{{transaction.TypeTransaction.Label}}
-								<img src="" alt="">
-								</td>
-
-							<td class=" text-start">{{transaction.sum}}€</td>
-							<td>{{transaction.libelle}}</td>
-							<td>
-								<span style="background:{{transaction.Category.Color}}" class="badge">{{transaction.Category.Label}}</span>
-							</td>
-							<td>{{transaction.WayTransaction.Label}}</td>
-							<td>{{transaction.dateTransaction|date("d-m-y")}}</td>
-							<td>
-								{% if cycle.dateEnd is  empty %}
-									<a href="{{ path("app_transaction_edit" , { "TransactionId" : transaction.id } ) }}">
-										<span class="material-icons bg-secondary p-1 text-light rounded">
-											edit
-										</span>
-									</a>
-									<a href="{{ path("app_transaction_delete" , { "TransactionId" : transaction.id } ) }}">
-										<span class="material-icons bg-warning p-1 text-light rounded">
-											delete
-										</span>
-									{% else %}
-										<span class="material-icons bg-dark p-1 text-light rounded">
-											edit
-										</span>
-										<span class="material-icons bg-dark p-1 text-light rounded">
-											delete
-										</span>
-									</a>
-								{% endif %}
-							</td>
-						</tr>
-		{% endfor %}
-	</tbody>
-</table>{% endif %}</div></div></div></div>{% endblock %}
+</div>{% endblock %}

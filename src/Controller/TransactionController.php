@@ -8,6 +8,7 @@ use App\Service\ServiceCycle;
 use App\Form\TransactionFormType;
 use App\Service\ServiceDashboard;
 use App\Service\ServiceTransaction;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,15 +64,26 @@ class TransactionController extends AbstractController
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['CycleId' => $CycleId]);
         $data = [];
-        $transactions = $serviceTransaction->getTransactionsByCurrentCycle($CycleId);
+        $transactions = $serviceTransaction->getTransactionsByCurrentCycle($CycleId, ['page' => $request->query->getInt('page', 1)]);
+
+        $Entry = $serviceDashboard->getSumEntries($BankAccountsAndCycleDashboard['BankAccount']);
+        $Out = $serviceDashboard->getSumOuties($BankAccountsAndCycleDashboard['BankAccount']);
+    
+
+        $data['Entry'] = $Entry;
+        $data['Out'] = $Out;
+        
         // BankAccount
         $data['cycle'] = $BankAccountsAndCycleDashboard['Cycle'];
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
-
-        $data['transactions'] = $transactions;
+        
+        $data['transactions'] = $transactions["transactions"];
+        $data['pagination'] = ["pages" => $transactions['pages'], 
+                                "page" => $transactions['page'], 
+                                "limit" => $transactions['limit']];
         $data['dates'] = $serviceTransaction->getCurrentMonth();
-
+        
         return $this->render('transaction/index.html.twig', $data);
     }
 

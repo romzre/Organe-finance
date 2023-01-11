@@ -74,7 +74,7 @@
 							<div class="p-2 fs-2 d-flex justify-content-end">
 								<span class="d-block mx-3 text-danger">
 									{% if Out is not empty %}
-										{{ Out }}
+										{{ Out|round(2, 'floor') }}
 									{% else %}
 										0
 									{% endif %}€</span>

@@ -30,10 +30,12 @@ class ServiceChart extends AbstractService
         $colors = [];
         $transactionsSum = [];
         foreach ($transactions as $transaction) {
-            if ($transaction->getTypeTransaction()->getLabel() === "Sortie") {
+            if ($transaction->getTypeTransaction()->getLabel() === "Sortie") 
+            {
                 $key = array_search($transaction->getCategory()->getLabel() , $categories);
-                if(!empty($key))
+                if(gettype($key) == "integer")
                 {
+                    
                     $transactionsSum[$key] += $transaction->getSum();
                 }
                 else

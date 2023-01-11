@@ -1,7 +1,10 @@
+
+
 const BtnFilter = document.querySelector('#btnDateFilter')
 const table = document.querySelector('.table')
 
 BtnFilter.addEventListener('click' , () => {
+    
     let InputStart = document.querySelector('#Start')
     let Start = InputStart.value
 
@@ -15,13 +18,21 @@ BtnFilter.addEventListener('click' , () => {
     const optionsStart = { weekday: 'long', month: 'long', day: 'numeric' };
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     dateCycle.innerHTML = "Du " + DateStartFr.toLocaleDateString(undefined, optionsStart) + " au " +DateEndFr.toLocaleDateString(undefined, options)
-
+    loader()
     fetch("/api/transaction/date?Start="+Start+"&End="+End)
     .then(response => response.json())
     .then(data => data)
     .then(data => formatTableTransaction(data))
 })
-
+function loader()
+{
+    let tableData = document.querySelectorAll('.rowData > td')
+    tableData.forEach(rowData => {
+        rowData.innerText = ""
+        rowData.classList.add("loading")
+       
+    });
+}
 function formatTableTransaction(data)
 {
     deleteDataTransaction()
