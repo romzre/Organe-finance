@@ -3,8 +3,13 @@
 		<ul class="pagination">
 			{% if currentPage > 1 %}
 				<li class="page-item">
-					<a class="page-link" href="{{path ~ "?page=" ~ (currentPage - 1) }}" aria-label="Previous">
+					<a class="page-link" href="{{path ~ "?page=1" }}" aria-label="First">
 						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="{{path ~ "?page=" ~ (currentPage - 1) }}" aria-label="Previous">
+						<span aria-hidden="true">&lt;</span>
 					</a>
 				</li>
 			{% else %}
@@ -15,13 +20,18 @@
 				</li>
 			{% endif %}
 			{% for page in 1..pages %}
-				<li class="page-item {{ (page == currentPage ) ? "active" : "" }}">
+				<li class="page-item {{ (page == currentPage ) ? " active" : " " }}">
 					<a class="page-link" href="{{path ~ "?page=" ~ page }}">{{ page}}</a>
 				</li>
 			{% endfor %}
 			{% if currentPage < pages %}
 				<li class="page-item">
 					<a class="page-link" href="{{path ~ "?page=" ~ (currentPage + 1) }}" aria-label="Next">
+						<span aria-hidden="true">&gt;</span>
+					</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="{{path ~ "?page=" ~ pages }}" aria-label="Last">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>

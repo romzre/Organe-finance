@@ -24,7 +24,7 @@ class ServiceChart extends AbstractService
     public function index(Cycle $cycle): Chart
     {
 
-        $transactions = $this->serviceTransaction->getTransactionsByCurrentCycle($cycle);
+        $transactions = $this->serviceTransaction->getDataChartsByCurrentCycle($cycle);
 
         $categories = [];
         $colors = [];

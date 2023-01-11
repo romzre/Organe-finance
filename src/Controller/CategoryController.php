@@ -7,6 +7,7 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Service\ServiceDashboard;
 use App\Repository\CategoryRepository;
+use App\Service\Category\CategoryService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,14 +21,21 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{CycleId}", name="app_category_index", methods={"GET"})
      */
-    public function index(Cycle $CycleId , ServiceDashboard $serviceDashboard , CategoryRepository $categoryRepository): Response
+    public function index(Cycle $CycleId, ServiceDashboard $serviceDashboard, CategoryService $CategoryService, Request $request): Response
     {
-      
+
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
-      
-        $data["categories"] = $categoryRepository->findBy(['User' => $this->getUser()]);
+
+        $categories = $CategoryService->getCategoriesByUser($this->getUser(), ['page' => $request->query->getInt('page', 1)]);
         $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
         $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
+
+        $data['categories'] = $categories['categories'];
+        $data['pagination'] = [
+            "pages" => $categories['pages'],
+            "page" => $categories['page'],
+            "limit" => $categories['limit']
+        ];
 
         $data["cycle"] = $CycleId;
         return $this->render('category/index.html.twig', $data);
@@ -36,7 +44,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{CycleId}/new", name="app_category_new", methods={"GET", "POST"})
      */
-    public function new(Cycle $CycleId , ServiceDashboard $serviceDashboard , Request $request, CategoryRepository $categoryRepository): Response
+    public function new(Cycle $CycleId, ServiceDashboard $serviceDashboard, Request $request, CategoryRepository $categoryRepository): Response
     {
         // dd($CycleId);
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
@@ -74,7 +82,7 @@ class CategoryController extends AbstractController
 
      * @Route("/{CycleId}/{id}/edit", name="app_category_edit", methods={"GET", "POST"})
      */
-    public function edit(ServiceDashboard $serviceDashboard ,Cycle $CycleId , Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function edit(ServiceDashboard $serviceDashboard, Cycle $CycleId, Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ["CycleId" => $CycleId]);
 
@@ -96,7 +104,6 @@ class CategoryController extends AbstractController
         $data["category"] = $category;
 
         return $this->renderForm('category/edit.html.twig', $data);
-
     }
 
     /**
@@ -104,7 +111,7 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }
 
