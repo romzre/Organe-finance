@@ -66,7 +66,7 @@ class ServiceChart extends AbstractService
 
         $chart->setOptions([
             'title' => [
-                'text' => "Répartition par catégorie",
+                'text' => "Dépenses par catégorie",
             ],
             
 

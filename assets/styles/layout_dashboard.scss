@@ -29,7 +29,11 @@
   
   .Main { grid-area: Main; }
   
-
+.Nav
+{
+  position: sticky;
+  top: 20px;
+}
 
 
 // ### Side menu
