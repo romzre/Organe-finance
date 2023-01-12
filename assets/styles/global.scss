@@ -5,7 +5,48 @@ $secondary: #42CDE3;
 $info: #F8CB2E;
 $success: #EE5007;
 $warning: #B22727;
+$dark: #3b3b3b;
 
 
 
 @import "~bootstrap/scss/bootstrap";
+
+
+@keyframes loading {
+    50% {
+        background-position:
+            100% 0;
+    }
+    100% {
+        background-position:
+            200% 0;
+    }
+}
+
+.loading
+{
+    overflow: hidden;
+    position: relative;
+}
+.loading::before{
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 51px;
+    background-color: #9a9a9a;
+    top: 0;
+    left: 0;
+}
+.loading::after{
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: linear-gradient( 100deg, rgba(67, 67, 67, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80% );
+        background-size: 200px 24px;
+        background-position: -100px 0;
+        background-repeat: no-repeat;
+        animation: loading 2s infinite;
+    top: 30%;
+    left: 0;
+}

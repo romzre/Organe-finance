@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Entity\Cycle;
 use App\Entity\BankAccount;
 use App\Repository\CycleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -90,6 +91,18 @@ class ServiceDashboard extends AbstractService
         $results = $this->TransactionRepository->getSumTotalOutflow($Cycle);
         
         return implode("" , $results[0]);
+    }
+
+    public function getCurrentMonth(): array
+    {
+        $date = new DateTime();
+        $nbDayInCurrentMonth = date('t');
+        $dateStartMonth = $date->format("Y-m-01 00:00:00");
+        $dateEndMonth = $date->format("Y-m-{$nbDayInCurrentMonth} 00:00:00");
+        return [
+            "dateStartMonth" => $dateStartMonth,
+            "dateEndMonth" => $dateEndMonth
+        ];
     }
 
 }

@@ -24,19 +24,15 @@ class CycleController extends AbstractController
     public function add(ServiceDashboard $serviceDashboard, BankAccount $BankAccountId, ServiceCycle $service,  Request $request): Response
     {
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['BankAccountId' => $BankAccountId]);
-
-
-
         $data = [];
         $cycle = new Cycle();
         $form = $this->createForm(CycleAddFormType::class, $cycle);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() ) {
                 if ($service->checkIfCycleActiveExist($BankAccountId)) {
+                    $service->closeCycleActive($BankAccountId);
                     $service->disabledCycles($BankAccountId);
                     $service->addCycle($form->getData(), $BankAccountId);
-
                     $ActiveCycle = $service->getActiveCycle($BankAccountId);
                     $data["cycle"] = $ActiveCycle;
                 } else {
@@ -45,7 +41,6 @@ class CycleController extends AbstractController
                     $ActiveCycle = $service->getActiveCycle($BankAccountId);
                     $data["cycle"] = $ActiveCycle;
                 }
-            }
         }
         $data['cycle'] = $BankAccountsAndCycleDashboard['Cycle'];
         $data["CycleAddForm"] = $form->createView();

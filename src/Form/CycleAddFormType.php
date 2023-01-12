@@ -13,8 +13,8 @@ class CycleAddFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateBegin',  DateType::class, ['widget' => 'single_text'])
-            ->add('dateEnd', DateType::class, ['widget' => 'single_text'])
+            // ->add('dateBegin',  DateType::class, ['widget' => 'single_text'])
+            // ->add('dateEnd', DateType::class, ['widget' => 'single_text'])
             ->add('solde')
         ;
     }

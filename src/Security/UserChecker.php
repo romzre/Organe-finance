@@ -29,7 +29,6 @@ class UserChecker implements UserCheckerInterface
 
         if (!$user->isIsVerify()) {
         
-           
                 // the message passed to this exception is meant to be displayed to the user
             throw new CustomUserMessageAccountStatusException("Votre compte n'est pas activé");
         }

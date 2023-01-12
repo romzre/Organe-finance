@@ -18,3 +18,58 @@ textarea
 {
     resize: none;
 }
+
+.typeElement{
+    display: flex;
+    align-items: center;
+    height: 51px;
+    gap: 5px;
+    padding: 8px;
+}
+.rowTable
+{
+    height: 51px;
+    border-bottom: 1px rgb(27, 27, 27);
+}
+.customFetchIcon{
+    display: block;
+    background-color: red;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    
+}
+.customFetchIcon > span:nth-child(1)
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 2px;
+    background: #fff;
+    border-radius:25px;
+}
+.customFetchIcon > span:nth-child(2)
+{
+    position: absolute;
+    top: 14px;
+    left: 2px;
+    transform: translate(-5%, -5%)rotate(38deg);
+    width: 11px;
+    height: 2px;
+    background: #fff;
+    border-radius:25px;
+}
+.customFetchIcon > span:nth-child(3)
+{
+    position: absolute;
+    top: 8px;
+    left: 2px;
+    transform: translate(-5%, -5%)rotate(-38deg);
+    width: 11px;
+    height: 2px;
+    background: #fff;
+    border-radius:25px;
+}
+

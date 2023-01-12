@@ -24,16 +24,18 @@ class ServiceChart extends AbstractService
     public function index(Cycle $cycle): Chart
     {
 
-        $transactions = $this->serviceTransaction->getTransactionsByCycle($cycle);
+        $transactions = $this->serviceTransaction->getDataChartsByCurrentCycle($cycle);
 
         $categories = [];
         $colors = [];
         $transactionsSum = [];
         foreach ($transactions as $transaction) {
-            if ($transaction->getTypeTransaction()->getLabel() === "Sortie") {
+            if ($transaction->getTypeTransaction()->getLabel() === "Sortie") 
+            {
                 $key = array_search($transaction->getCategory()->getLabel() , $categories);
-                if(!empty($key))
+                if(gettype($key) == "integer")
                 {
+                    
                     $transactionsSum[$key] += $transaction->getSum();
                 }
                 else

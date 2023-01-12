@@ -30,13 +30,13 @@ class Cycle
     private $dateBegin;
 
     /**
-     * @ORM\Column(type="datetime")
-     * 
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\Range(
      *      minPropertyPath="dateBegin", minMessage="Vous ne pouvez pas choisir une date antèrieur à la date de début"
      * )
      */
     private $dateEnd;
+
 
     /**
      * @ORM\Column(type="boolean")
@@ -63,6 +63,7 @@ class Cycle
      * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="Cycle")
      */
     private $transactions;
+
 
     public function __construct()
     {
@@ -91,7 +92,7 @@ class Cycle
         return $this->dateEnd;
     }
 
-    public function setDateEnd(\DateTimeInterface $dateEnd): self
+    public function setDateEnd(?\DateTimeInterface $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
 
@@ -175,5 +176,7 @@ class Cycle
 
         return $this;
     }
+
+  
 
 }
