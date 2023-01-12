@@ -68,5 +68,13 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<div class="row">
+					{% set pages = pagination.pages  %}
+					{% set currentPage = pagination.page  %}
+					{% set Previous = currentPage - 1  %}
+					{% set Next = currentPage + 1  %}
+					{% set path = path("app_category_index" , { "CycleId" : cycle.id } )  %}
+					{% include "partials/_pagination.html.twig" %}
+				</div>
 	</div>
 {% endblock %}

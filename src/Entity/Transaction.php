@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TransactionRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TransactionRepository::class)
@@ -14,21 +15,25 @@ class Transaction
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("transaction_index")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("transaction_index")
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("transaction_index")
      */
     private $sum;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("transaction_index")
      */
     private $dateTransaction;
 
@@ -39,18 +44,21 @@ class Transaction
 
     /**
      * @ORM\ManyToOne(targetEntity=Periodicity::class, inversedBy="transactions")
+     * 
      */
     private $Periodicity;
 
     /**
      * @ORM\ManyToOne(targetEntity=WayTransaction::class, inversedBy="transactions")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("transaction_index")
      */
     private $WayTransaction;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypeTransaction::class, inversedBy="transactions")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("transaction_index")
      */
     private $TypeTransaction;
 
@@ -62,6 +70,7 @@ class Transaction
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="transactions")
+     * @Groups("transaction_index")
      */
     private $Category;
 

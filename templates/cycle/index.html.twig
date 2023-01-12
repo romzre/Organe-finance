@@ -1,4 +1,3 @@
-
 {% extends 'partials/base_dashboard.html.twig' %}
 
 {% block title %}Pèriode
@@ -7,14 +6,16 @@
 {% block body %}
 <div class="container">
 	<div class="row">
-		<h1 class="text-primary border-bottom border-warning">Compte : {{BankAccount.name}} > Transaction
+		<h1 class="text-primary border-bottom border-warning">Compte :
+			{{BankAccount.name}}
+			> Transaction
 		</h1>
 	</div>
 	<div class="row">
 		<nav class="d-flex justify-content-start" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">
-					<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id}  )}}">{{BankAccount.name}}</a>
+					<a href="{{ path("app_bank_account" , {"BankAccountId": BankAccount.id} )}}">{{BankAccount.name}}</a>
 				</li>
 				<li class="breadcrumb-item active" aria-current="page">Pèriodes</li>
 			</ol>
@@ -25,13 +26,12 @@
 	</div>
 	<div class="row">
 		<div class="d-flex justify-content-end p-2">
-			<a href="{{ path("app_cycle_new" , {"BankAccountId": BankAccount.id }) }}">
-				<button class="btn btn-primary gap-1 d-flex justify-content-center align-items-center">
-					Ajouter une pèriode<span class="material-icons">
+
+			<button type="button" class="btn btn-primary gap-1 d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#ModalAddcycle">
+				Initialiser une nouvelle pèriode<span class="material-icons">
 						add_circle
 					</span>
-				</button>
-			</a>
+			</button>
 		</div>
 	</div>
 	<div class="row p-2">
@@ -49,9 +49,14 @@
 					{% for cycle in cycles %}
 						<tr>
 							<td>{{ cycle.dateBegin|date("d - m - y") }}</td>
-					</td>
-					<td>{{cycle.dateEnd|date("d - m - y")}}</td>
-					<td>{{cycle.solde}}€</td>
+							<td>
+								{% if cycle.dateEnd is not empty %}
+									{{cycle.dateEnd|date("d - m - y")}}
+								{% else %}
+									<span class="badge bg-info">En cours</span>
+								{% endif %}
+							</td>
+							<td>{{cycle.solde}}€</td>
 					<td>
 						{% if cycle.isActive %}
 							<a href="{{ path("app_bank_account" , { "BankAccountId" : BankAccount.id } ) }}">
@@ -71,15 +76,26 @@
 								edit
 							</span>
 						</a>
-						<a href="{{ path("app_cycle_delete" , { "CycleId" : cycle.id } ) }}">
+						{# <a href="{{ path("app_cycle_delete" , { "CycleId" : cycle.id } ) }}">
 							<span class="material-icons bg-warning p-1 text-light rounded">
 								delete
 							</span>
-						</a>
+						</a> #}
 					</td>
 				</tbody>
 			</tr>
 		{% endfor %}
 	</tbody>
-</table>{% endif %}</div></div></div></div>{% endblock %}
-
+</table>{% endif %}</div></div></div></div>
+<!-- Modal -->
+<div class="modal fade" id="ModalAddcycle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+</button></div><div class="modal-body">La création d'une nouvelle pèriode mettra fin à la pèriode en cours. Etes vous vraiment sur ?</div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+<a href="{{ path("app_cycle_new" , {"BankAccountId": BankAccount.id }) }}">
+<button type="button" class="btn btn-primary">Créer une nouvelle pèriode</button>
+</a>
+</div></div></div></div>{% endblock %}

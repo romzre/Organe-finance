@@ -1,4 +1,9 @@
+
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="d-flex justify-content-between">
+    <button class="btn btn-info"><a href="{{ path('app_category_index' , {"CycleId" : cycle.id}) }}">Annuler</a></button>
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    </div>
 {{ form_end(form) }}
+

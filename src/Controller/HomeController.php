@@ -24,41 +24,4 @@ class HomeController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/dashboard", name="app_dashboard")
-     */
-    public function dashboard(ServiceDashboard $serviceDashboard ,Request $request , ServiceBankAccount $serviceBankAccount): Response
-    {
-        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), []);
-
-        
-
-        $errors = [];
-        $bankAccount = new BankAccount();
-        
-        $form = $this->createForm(AddBankAccountFormType::class , $bankAccount);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) 
-        {
-            if($form->isValid())
-            {
-                $serviceBankAccount->addBankAccount($form->getData(), $this->getUser());
-
-            }
-            else
-            {
-                $errors = $form->getErrors();
-            }
-        }
-
-
-        $data = [];
-        $data['errors'] = $errors;
-        $data['BankAccounts'] = $BankAccountsAndCycleDashboard['BankAccounts'];
-        $data['addBankAccountForm'] = $form->createView();
-      
-        return $this->render('dashboard/index.html.twig', $data );
-
-    }
-
 }

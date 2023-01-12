@@ -38,6 +38,7 @@ class ServiceCycle extends AbstractService
     {
         $cycle = $form;
         $cycle->setCreatedAt(new \DateTimeImmutable())
+              ->setDateBegin(new \DateTimeImmutable())
                 ->setIsActive(1)
                 ->setBankAccount($BankAccount);
         $this->manager->persist($cycle);
@@ -80,6 +81,19 @@ class ServiceCycle extends AbstractService
         ]);
 
         return empty($BankAccountActive) ? false : true; 
+    }
+
+    public function closeCycleActive(BankAccount  $BankAccount): void
+    {
+        $BankAccountActive = $this->manager->getRepository(Cycle::class)->findOneBy([
+            'isActive' => 1,
+            "BankAccount" => $BankAccount
+
+        ]);
+
+        $BankAccountActive->setDateEnd(new \DateTimeImmutable());
+        $this->manager->flush();
+
     }
 
     public function disabledCycles(BankAccount $bankAccount): void
