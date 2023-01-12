@@ -2,6 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Cycle;
+use App\Entity\Category;
+use App\Entity\Periodicity;
+use App\Entity\WayTransaction;
+use App\Entity\TypeTransaction;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TransactionRepository;
 use Symfony\Component\Serializer\Annotation\Groups;

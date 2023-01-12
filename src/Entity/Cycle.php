@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CycleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Transaction;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CycleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,7 +38,6 @@ class Cycle
      */
     private $dateEnd;
 
-
     /**
      * @ORM\Column(type="boolean")
      */
@@ -63,7 +63,6 @@ class Cycle
      * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="Cycle")
      */
     private $transactions;
-
 
     public function __construct()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Transaction;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
