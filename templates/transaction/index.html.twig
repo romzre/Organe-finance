@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="container px-5">
 		<div class="row">
-			<h1 class="text-primary text-primary border-bottom border-warning">Compte :
+			<h1 class="fs-md-6 text-primary text-primary border-bottom border-warning">Compte :
 				{{BankAccount.name}}
 				> Transaction</h1>
 		</div>
@@ -22,14 +22,14 @@
 
 		</div>
 		<div class="row">
-			<div class="d-flex gap-4">
-				<h2 id="dateCycle" class="fs-4">Du
+			<div class="col">
+				<h2 id="dateCycle" class="col-12 col-md-12 fs-4">Du
 					{{ dates.dateStartMonth|format_datetime('full', 'none', locale='fr')}}
 
 					au
 					{{ dates.dateEndMonth|format_datetime('full', 'none', locale='fr')}}
 				</h2>
-				<div class=" w-25 rounded-5 shadow">
+				<div class="col-12 col-sm-8 col-md-6 rounded-5 shadow">
 					<div class="p-2 fs-5 mx-3 d-flex">Solde actuel :
 						<span class="d-block mx-3 text-info">
 							{% if Entry is defined and Entry is not empty and Out is defined and Out is not empty %}
@@ -62,16 +62,16 @@
 
 			</div>
 			<div class="row ">
-				<div class="d-flex gap-2 shadow-sm align-items-center flex-row">
-					<div class="col-sm-3  d-flex gap-2 justify-content-start align-items-center  py-2">
-						<input id="Start" class="form-control" type="date" name="dateStart" value="{{ dates.dateStartMonth|date("Y-m-d")}}">
-						<input id="End" class="form-control" type="date" name="dateEnd" value="{{ dates.dateEndMonth|date("Y-m-d")}}">
+				<div class="shadow-sm ">
+					<div class="col-6  d-flex gap-2 justify-content-start align-items-center  py-2">
+						<input id="Start" class="form-control " type="date" name="dateStart" value="{{ dates.dateStartMonth|date("Y-m-d")}}">
+						<input id="End" class="form-control " type="date" name="dateEnd" value="{{ dates.dateEndMonth|date("Y-m-d")}}">
 					</div>
-					<div>
+					<div class="col-3">
 						<button id="btnDateFilter" class="btn btn-info ">Filtrer</button>
 					</div>
 				
-				<div class="col-sm-3 d-flex justify-content-start align-items-center p-2">
+				<div class="col-3 d-flex justify-content-start align-items-center p-2">
 					<select class="form-select form-control" id="FHeadTable" aria-label="FilterByHeadTable">
 						<option value="noValue" selected>Grouper par</option>
 						<option value="0">Type</option>
