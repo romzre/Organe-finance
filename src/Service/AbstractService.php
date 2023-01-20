@@ -90,6 +90,7 @@ abstract class AbstractService
         ->setParameter('dateBeginMonth', $currentMonth["dateStartMonth"])
         ->andWhere('t.dateTransaction < :dateEndMonth')
         ->setParameter('dateEndMonth', $currentMonth["dateEndMonth"])
+        ->andWhere("t.Cycle = {$cycle->getId()}")
         ->orderBy('t.dateTransaction', 'DESC')
         ->setMaxResults($limit)
         ->setFirstResult($page * $limit -$limit);

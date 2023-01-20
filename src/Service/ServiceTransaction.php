@@ -51,14 +51,13 @@ class ServiceTransaction extends AbstractService
      
         $currentMonth = $this->getCurrentMonth();
 
-    
-
         return $this->getManager()->getRepository(Transaction::class)
         ->createQueryBuilder('t')
         ->select('t')
         ->where('t.dateTransaction > :dateBeginMonth')
         ->setParameter('dateBeginMonth', $currentMonth["dateStartMonth"])
         ->andWhere('t.dateTransaction < :dateEndMonth')
+        ->andWhere("t.Cycle = {$cycle->getId()}")
         ->setParameter('dateEndMonth', $currentMonth["dateEndMonth"])
         ->orderBy('t.dateTransaction', 'DESC')
         ->getQuery()

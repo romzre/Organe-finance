@@ -30,7 +30,6 @@
 						<a href="{{ path("app_cycle_new" , { 'BankAccountId': BankAccount.id }) }}">
 							<button class="btn btn-primary">Ajouter un cycle</button>
 						</a>
-
 					</div>
 				</div>
 				<div class="row">
@@ -47,18 +46,8 @@
 					</h2>
 				</div>
 				<div class="row ">
-					<div class="d-flex gap-4 my-4">
-						<div class="card w-25 rounded-5 shadow">
-							<div class="p-2 fs-4 mx-3">Solde de départ</div>
-							<div class="p-2 fs-2 d-flex justify-content-end">
-
-								<span class="d-block mx-3 text-muted">
-									{{cycle.solde}}
-									€</span>
-
-							</div>
-						</div>
-						<div class="card w-25 rounded-5 shadow bg-gray-700">
+					<div class="d-flex flex-column flex-md-row gap-4 my-2 ">
+						<div class="col-8 col-md-3 card  rounded-5 shadow bg-gray-700">
 							<div class="p-2 fs-4  mx-3">Entrer</div>
 							<div class="p-2 fs-2 d-flex justify-content-end">
 								<span class="d-block mx-3 text-primary">
@@ -69,7 +58,7 @@
 									{% endif %}€</span>
 							</div>
 						</div>
-						<div class="card w-25 rounded-5 shadow">
+						<div class="col-8 col-md-3 card  rounded-5 shadow">
 							<div class="p-2 fs-4  mx-3 ">Sortie</div>
 							<div class="p-2 fs-2 d-flex justify-content-end">
 								<span class="d-block mx-3 text-danger">
@@ -78,10 +67,9 @@
 									{% else %}
 										0
 									{% endif %}€</span>
-
 							</div>
 						</div>
-						<div class="card w-25 rounded-5 shadow">
+						<div class=" col-8 col-md-3 card  rounded-5 shadow">
 							<div class="p-2 fs-4 mx-3">Solde actuel</div>
 							<div class="p-2 fs-2 d-flex justify-content-end">
 								<span class="d-block mx-3 text-info">
@@ -103,14 +91,18 @@
 			{% endif %}
 		{% endif %}
 		<div class="row p-4 ">
-
-			{% if chart is defined and chart is not empty %}
-				<div class="w-25 border p-4 shadow">
-					<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
-					{{ render_chart(chart) }}
+			{% if Out is not empty %}
+				{% if chart is defined and chart is not empty %}
+					<div class="col-8 col-md-4 col-sm-10 border p-4 shadow">
+						<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
+						{{ render_chart(chart) }}
+					</div>
+				{% endif %}
+			{% else %}
+				<div class="col-8 col-md-4 col-sm-10 border p-4 shadow">
+					<h4 class="text-center fs-5">Pas de graphique enregistrer</h4>
 				</div>
 			{% endif %}
-
 		</div>
 	</div>
 </div>{% endblock %}
