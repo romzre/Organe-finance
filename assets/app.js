@@ -13,6 +13,7 @@ import './styles/nav.scss';
 import './styles/layout_dashboard.scss';
 
 
+import './scripts/Nav.js';
 import './scripts/Api/Insert.js';
 import './scripts/Api/FilterTransaction.js';
 import './scripts/Controller/Transaction/FilterTransactionController.js';
