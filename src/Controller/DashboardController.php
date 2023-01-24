@@ -29,6 +29,7 @@ class DashboardController extends AbstractController
         {
             $data['BankAccount'] = $bankAccountService->addBankAccount($form->getData(), $this->getUser());
             $data['Cycle'] = $CycleService->addCycle($data['BankAccount'] , floatval($form['solde']->getData())); 
+            return $this->redirectToRoute('app_bank_account', ["BankAccountId" => $data['BankAccount']->getId()], Response::HTTP_SEE_OTHER);
         }
         $data['errors'] = $form->getErrors();
         $data['BankAccounts'] = $BankAccountsAndCycleDashboard['BankAccounts'];
