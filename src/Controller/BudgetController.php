@@ -2,19 +2,29 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Cycle;
+use App\Service\ServiceDashboard;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BudgetController extends AbstractController
 {
     /**
-     * @Route("/budget", name="app_budget")
+     * @Route("/budget/{CycleId}", name="app_budget_index")
      */
-    public function index(): Response
+    public function index(Cycle $CycleId, ServiceDashboard $serviceDashboard ): Response
     {
-        return $this->render('budget/index.html.twig', [
-            'controller_name' => 'BudgetController',
-        ]);
+        $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['CycleId' => $CycleId] );
+        
+        $data["BankAccounts"] = $BankAccountsAndCycleDashboard['BankAccounts'];
+        $data["BankAccount"] = $BankAccountsAndCycleDashboard['BankAccount'];
+        $data["cycle"] = $BankAccountsAndCycleDashboard['Cycle'];
+
+        return $this->render('budget/index.html.twig', $data);
     }
+
+    /**
+     *  @Route("/budget/ajouter")
+     */
 }

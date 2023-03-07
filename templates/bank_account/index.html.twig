@@ -93,7 +93,7 @@
 		<div class="row p-4 ">
 			{% if Out is not empty %}
 				{% if chart is defined and chart is not empty %}
-					<div class="col-8 col-md-4 col-sm-10 border p-4 shadow">
+					<div class="col-8 col-md-4 col-lg-3 col-sm-10 border p-4 shadow">
 						<h4 class="text-center fs-5">{{chart.options.title.text}}</h4>
 						{{ render_chart(chart) }}
 					</div>

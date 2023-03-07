@@ -23,14 +23,9 @@ class Budget
     private $Name;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime_immutable")
      */
-    private $dateBegin;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $dateEnd;
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -49,26 +44,14 @@ class Budget
         return $this;
     }
 
-    public function getDateBegin(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->dateBegin;
+        return $this->createdAt;
     }
 
-    public function setDateBegin(\DateTimeInterface $dateBegin): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->dateBegin = $dateBegin;
-
-        return $this;
-    }
-
-    public function getDateEnd(): ?\DateTimeInterface
-    {
-        return $this->dateEnd;
-    }
-
-    public function setDateEnd(\DateTimeInterface $dateEnd): self
-    {
-        $this->dateEnd = $dateEnd;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
