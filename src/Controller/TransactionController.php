@@ -65,7 +65,7 @@ class TransactionController extends AbstractController
         $BankAccountsAndCycleDashboard = $serviceDashboard->getDashboard($this->getUser(), ['CycleId' => $CycleId]);
         $data = [];
         $transactions = $serviceTransaction->getTransactionsByCurrentCycle($CycleId, ['page' => $request->query->getInt('page', 1)]);
-
+        
         $Entry = $serviceDashboard->getSumEntries($BankAccountsAndCycleDashboard['BankAccount']);
         $Out = $serviceDashboard->getSumOuties($BankAccountsAndCycleDashboard['BankAccount']);
     

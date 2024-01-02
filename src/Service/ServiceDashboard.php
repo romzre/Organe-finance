@@ -82,7 +82,7 @@ class ServiceDashboard extends AbstractService
     {
         $Cycle = $this->getActiveCycle($BankAccount);
         $results = $this->TransactionRepository->getSumTotalInflow($Cycle);
-        
+   
         return implode("" , $results[0]);
     }
 
@@ -90,7 +90,7 @@ class ServiceDashboard extends AbstractService
     {
         $Cycle = $this->getActiveCycle($BankAccount);
         $results = $this->TransactionRepository->getSumTotalOutflow($Cycle);
-        
+   
         return implode("" , $results[0]);
     }
 

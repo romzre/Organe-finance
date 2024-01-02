@@ -25,17 +25,17 @@ class ServiceChart extends AbstractService
     {
 
         $transactions = $this->serviceTransaction->getDataChartsByCurrentCycle($cycle);
-
+   
         $categories = [];
         $colors = [];
         $transactionsSum = [];
         foreach ($transactions as $transaction) {
-            if ($transaction->getTypeTransaction()->getLabel() === "Sortie") 
+            if ($transaction->getTypeTransaction()->getId() === 2) 
             {
+               
                 $key = array_search($transaction->getCategory()->getLabel() , $categories);
                 if(gettype($key) == "integer")
                 {
-                    
                     $transactionsSum[$key] += $transaction->getSum();
                 }
                 else
@@ -43,12 +43,11 @@ class ServiceChart extends AbstractService
                     $categories[] = $transaction->getCategory()->getLabel();
                     $transactionsSum[] = $transaction->getSum();
                     $colors[] = $transaction->getCategory()->getColor();
+                    
                 }
             }
         }
-
-        
-
+  
         $chart = $this->chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
 
         $chart->setData([

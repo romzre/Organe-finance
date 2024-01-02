@@ -82,18 +82,18 @@ abstract class AbstractService
 
         $limit = !empty($options['limit']) ? $options['limit'] : 5;
         $page = $options['page'];
-
+  
         $query = $this->getManager()->getRepository(Transaction::class)
         ->createQueryBuilder('t')
         ->select('t')
-        ->where('t.dateTransaction > :dateBeginMonth')
+        ->where('t.dateTransaction >= :dateBeginMonth')
         ->setParameter('dateBeginMonth', $currentMonth["dateStartMonth"])
-        ->andWhere('t.dateTransaction < :dateEndMonth')
+        ->andWhere('t.dateTransaction <= :dateEndMonth')
         ->setParameter('dateEndMonth', $currentMonth["dateEndMonth"])
         ->orderBy('t.dateTransaction', 'DESC')
         ->setMaxResults($limit)
-        ->setFirstResult($page * $limit -$limit);
-       
+        ->setFirstResult($page * $limit - $limit);
+        
         $paginator = new Paginator($query);
         $transactions = $paginator->getQuery()->getResult();
         $pages = ceil($paginator->count() / $limit);
